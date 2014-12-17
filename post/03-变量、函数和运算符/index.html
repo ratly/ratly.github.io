@@ -1,0 +1,695 @@
+ 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>【共学】《编写可维护的javascript》03-变量、函数和运算符 - 耗子的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+        <link rel="alternative" href="/atom.xml" title="耗子的" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    
+</head>
+    <body>
+      <div id="container">
+        <div id="wrap">
+          <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">耗子的</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://haozi.de"></form>
+      </div>
+    </div>
+  </div>
+</header>
+          <div class="outer">
+            <section id="main"><article id="post-03-变量、函数和运算符" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/03-变量、函数和运算符/" class="article-date">
+  <time datetime="2013-06-26T17:58:33.000Z" itemprop="datePublished">Jun 27 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【共学】《编写可维护的javascript》03-变量、函数和运算符
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>耗子</strong></p>
+<p>今天我们一起学习的是第四章<br>变量、函数和操作符</p>
+<p><strong>耗子</strong></p>
+<p>先大家从变量和函数的声明开始吧</p>
+<p><strong>耗子</strong></p>
+<p>前几章中我们也或多或少地提到了js中变量和函数声明的一些坑</p>
+<p><strong>耗子</strong></p>
+<p>那么大家谁能来回忆总结下呢<br><a id="more"></a></p>
+<p><strong>刘林</strong></p>
+<p>var 貌似 后面的会自动成为全局变量</p>
+<p><strong>耗子</strong></p>
+<p>嗯,不过说得不对哦</p>
+<p><strong>雪花</strong></p>
+<p>var 语句可以放在脚本的任何地方</p>
+<p><strong>耗子</strong></p>
+<p>对，@雪花 说得对,但是建议大家把var 放在脚本的任意位置</p>
+<p><strong>黄朋全</strong></p>
+<p>for in</p>
+<p><strong>小妹</strong></p>
+<p>我来说一点哈</p>
+<p><strong>耗子</strong></p>
+<p>嗯 @小妹 来说说</p>
+<p><strong>小妹</strong></p>
+<p>var a=b=10;<br>b就被全局变量了</p>
+<p><strong>耗子</strong></p>
+<p>嗯，@小妹 说得对</p>
+<p><strong>雪花</strong></p>
+<p>var 语句被置顶</p>
+<p><strong>耗子</strong></p>
+<p>雪花的记性很好</p>
+<p><strong>小妹</strong></p>
+<p>对</p>
+<p><strong>耗子</strong></p>
+<p>一个作用域中<br>js引擎会把所有的var声明和具名函数的声音都提前</p>
+<p><strong>小妹</strong></p>
+<p>嗯 var funcA = function(){}这样的就是解释到这行才执行</p>
+<p><strong>小妹</strong></p>
+<p>是匿名函数</p>
+<p><strong>小妹</strong></p>
+<p>耗子 是吗？</p>
+<p><strong>耗子</strong></p>
+<p>对</p>
+<p><strong>耗子</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a();</div><div class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{alert(<span class="string">'a'</span>)}</div></pre></td></tr></table></figure>
+
+<p>这样的代码中，是会报错的，</p>
+<p>但是</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">b();</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span><span class="params">()</span></span>{alert(<span class="string">'b'</span>)};</div></pre></td></tr></table></figure>
+
+<p>这段代码却是能正常跑的</p>
+<p><strong>小妹</strong></p>
+<p>嗯</p>
+<p><strong>小妹</strong></p>
+<p>报a是undefined的错？</p>
+<p><strong>耗子</strong></p>
+<p>a是undefined，undefined不是函数，不能使用()运算符</p>
+<p><strong>小妹</strong></p>
+<p>是的</p>
+<p><strong>耗子</strong></p>
+<p>@黄朋全，java里这么写b能跑么？</p>
+<p><strong>黄朋全</strong></p>
+<p>编译都通不过</p>
+<p><strong>耗子</strong></p>
+<p>哦，明了</p>
+<p><strong>黄朋全</strong></p>
+<p>必须先声明，不声明怎么用？</p>
+<p><strong>耗子</strong></p>
+<p>将流程代码写在开头，大量的小方法写在后面，这会让代码看上去易读，但不提倡，js里有其他的方式可以实现这种风格。</p>
+<p><strong>牛牛</strong></p>
+<p>在类域里面 和函数域里面 还有区别。在类范围里面 书写前后没关系 不过在方法里面必须先声明才能用了</p>
+<p><strong>小妹</strong></p>
+<p>js 具名函数的声明不一定要放在调用前面</p>
+<p><strong>耗子</strong></p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>@牛牛 这点js也有类似的，虽然目前的js里并没有真正的类的概念，但是可以模拟出经典的类<br>就是对象的成员方法</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">    init: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">        <span class="comment">// TODO</span></div><div class="line">        <span class="keyword">this</span>.a();</div><div class="line">        <span class="comment">// TODO</span></div><div class="line">        <span class="keyword">this</span>.b();</div><div class="line">    },</div><div class="line">    a: func...,</div><div class="line">    b: func...</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这种风格可见于jq的源码中，是一种推荐的方式，会让代码易读</p>
+<p><strong>黄朋全</strong></p>
+<p>java开发的风格不是都这样吗</p>
+<p><strong>黄朋全</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function doSomething() {</div><div class="line">    <span class="keyword">var</span> <span class="literal">result</span>;</div><div class="line">    <span class="keyword">var</span> value;</div><div class="line">    <span class="literal">result</span> = <span class="number">10</span> + value;</div><div class="line">    value = <span class="number">10</span>;</div><div class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>像这个方法的执行结果是什么？</p>
+<p><strong>黄朋全</strong></p>
+<p>为什么没有赋值，就可以运算？</p>
+<p><strong>耗子</strong></p>
+<p>NaN,</p>
+<p>@黄朋全 这种写法是不推荐的,代码可以正常运行，但结果可能不是你期待的</p>
+<p><strong>小妹</strong></p>
+<p>@黄朋全 那个函数执行的结果一个是NaN</p>
+<p><strong>黄朋全</strong></p>
+<p>java里是直接报错的。编译都通不过</p>
+<p><strong>耗子</strong></p>
+<p>不会报错，但极不推荐先使用后声明</p>
+<p><strong>黄朋全</strong></p>
+<p>局部变量必须先赋值。<br>类变量才会有默认值。</p>
+<p><strong>耗子</strong></p>
+<p>只声明，不赋值就会有默认值了</p>
+<p><strong>小妹</strong></p>
+<p>对 默认值是undefined</p>
+<p><strong>黄朋全</strong></p>
+<p>任何地方声明都有默认值吗<br>所有的默认值都是undefined吗</p>
+<p><strong>小妹</strong></p>
+<p>是的，所有的声明但不赋值，都会有默认值undefined，undefined与自然数相加，结果就是NaN</p>
+<p><strong>耗子</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">a = <span class="number">1</span>;</div><div class="line">function <span class="func"><span class="keyword">func</span></span> () {</div><div class="line">    alert(a);</div><div class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line">};</div><div class="line"><span class="func"><span class="keyword">func</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure>
+
+<p>你们觉得会弹出啥?</p>
+<p><strong>黄朋全</strong></p>
+<p>1</p>
+<p><strong>小妹</strong></p>
+<p>是2</p>
+<p><strong>耗子</strong></p>
+<p>都不对<br>是undefined</p>
+<p><strong>小妹</strong></p>
+<p>啊 是undefined</p>
+<p>我错了</p>
+<p><strong>黄朋全</strong></p>
+<p>不明白</p>
+<p><strong>小妹</strong></p>
+<p>又是个坑</p>
+<p><strong>耗子</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line">function <span class="func"><span class="keyword">func</span><span class="params">()</span></span>{</div><div class="line">   alert(a);</div><div class="line">   <span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line">};</div><div class="line"><span class="func"><span class="keyword">func</span><span class="params">()</span></span>;</div><div class="line">alert(a);</div></pre></td></tr></table></figure>
+
+<p>这两次会弹出啥呢</p>
+<p><strong>小妹</strong></p>
+<p>undefined 和 1吧</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>牛牛</strong></p>
+<p>我觉得和之前一样</p>
+<p><strong>耗子</strong></p>
+<p>这么写js都不会出现脚本错误，但这些都会造成坑，所以要和大家说js里怎么写才是正确的</p>
+<p><strong>小妹</strong></p>
+<p>如果程序复杂点，查坑就不容易了</p>
+<p><strong>小妹</strong></p>
+<p>@耗子</p>
+<p><strong>小妹</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">    alert(a);</div><div class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这个是不会先解释 var a=2；这一句的？</p>
+<p><strong>耗子</strong></p>
+<p>同一个作用域中所有的变量和函数的声明都会前置，但是变量的值都是undefined,声明和赋值是两个过程，变量声明和具名函数会前置，但变量赋值却是按上下文来的</p>
+<p><strong>黄朋全</strong></p>
+<p>牢记变量的作用域，声明赋值提前，使用在后。</p>
+<p><strong>牛牛</strong></p>
+<p>function func(){<br>   a=2;<br>   alert(a);<br>   var a;<br>};<br>等价于</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span><span class="params">()</span></span>{</div><div class="line">    <span class="keyword">var</span> a;</div><div class="line">    a = <span class="number">2</span>;</div><div class="line">    alert(a);</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<p>是么?</p>
+<p><strong>耗子</strong></p>
+<p>嗯，@牛牛 说对了，而且这个a是局部变量，不会变成全局变量</p>
+<p><strong>刘林</strong></p>
+<p>是啊，迷惑人啊</p>
+<p>讲讲正确的东西该怎么做呗</p>
+<p>错误的方法太多了</p>
+<p><strong>耗子</strong></p>
+<p>正确的作法是在一个function的第一行开始把这个function里用到的所有变量、具名函数都写在最前面。</p>
+<p>推荐写先变量声明&amp;&amp;赋值，再写具名函数</p>
+<p>一类相关的函数建议包装在一个对象中。</p>
+<p>记住这些话就好了，糟粕的东西没必要多说。</p>
+<p><strong>耗子</strong></p>
+<p>同一个作用域里，<br>同一个变量如果被var 了多次，是不会了错的</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (condition) {</div><div class="line">   var a = <span class="number">1</span>;</div><div class="line">} <span class="keyword">else</span> {</div><div class="line">   var a = <span class="number">2</span>;</div><div class="line">}</div><div class="line">// 或者</div><div class="line"><span class="keyword">while</span> (condition) {</div><div class="line">    var a = <span class="number">1</span>;</div><div class="line">    <span class="keyword">...</span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>但这种在条件和循环中声明变量都是不对的</p>
+<p><strong>黄朋全</strong></p>
+<p>为什么</p>
+<p><strong>牛牛</strong></p>
+<p>条件语句的括号没有单独的作用域？</p>
+<p><strong>牛牛</strong></p>
+<p>有点变态</p>
+<p><strong>黄朋全</strong></p>
+<p>{}不是作用域吗</p>
+<p><strong>小妹</strong></p>
+<p>不是，因为js没有块作用域</p>
+<p><strong>耗子</strong></p>
+<p>js里只有函数有作用域和全局作用域</p>
+<p><strong>小妹</strong></p>
+<p>但是函数会在调用结束后 把局部变量销毁 但是也有特殊情况</p>
+<p><strong>小妹</strong></p>
+<p>闭包。。。我是不是扯远了</p>
+<p><strong>牛牛</strong></p>
+<p>没有块作用域 有点变态</p>
+<p><strong>黄朋全</strong></p>
+<p>闭包我知道。学过。哈哈</p>
+<p><strong>耗子</strong></p>
+<p>哈<br>闭包更绕了<br>改天进阶的时候再说吧</p>
+<p><strong>黄朋全</strong></p>
+<p>当年给讲了两个小时才明白。</p>
+<p><strong>牛牛</strong></p>
+<p>闭包？</p>
+<p><strong>小妹</strong></p>
+<p>下一个话题 。。。</p>
+<p><strong>耗子</strong></p>
+<p>闭包是js非常有用的一个特性，不过别的语言可能很少用到，非常绕，今天就不展开了。</p>
+<p><strong>小妹</strong></p>
+<p>今天的重点华丽的绕过闭包<br>嘿嘿</p>
+<p><strong>牛牛</strong></p>
+<p>好把</p>
+<p><strong>立即调用函数</strong></p>
+<p><strong>耗子</strong></p>
+<p>下一个讲立即调用函数</p>
+<p><strong>耗子</strong></p>
+<p>@小妹 你来说说吧</p>
+<p><strong>小妹</strong></p>
+<p>好 我试试</p>
+<p><strong>小妹</strong></p>
+<p>立即调用函数就是形如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line"></div><div class="line">})()；</div></pre></td></tr></table></figure>
+
+<p>用一对括号把function包起来，然后又一对括号让它立即运行</p>
+<p>嘿嘿</p>
+<p><strong>牛牛</strong></p>
+<p>立即调用函数的作用是什么？</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>基本上所有的开源的库都有类似的结构<br>比如jq<br>整个代码都包在<br>(function(window, undefined){</p>
+<p>})(window);<br>里</p>
+<p>为什么要这么写呢？</p>
+<p><strong>小妹</strong></p>
+<p>我的理解是减少命名冲突，保护私有变量</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>牛牛</strong></p>
+<p>其他的用途呢</p>
+<p><strong>耗子</strong></p>
+<p>就是创建一个作用域，减少和外部代码的冲突</p>
+<p>另外大部分局部变量会在运行后销毁，节省内存</p>
+<p><strong>耗子</strong></p>
+<p>(function(window, undefined){<br>})(window);<br>说下jq的这个结构吧</p>
+<p>这相当于声明了一个function，并立即把window当成参数传给了形参window，运行掉了</p>
+<p><strong>小妹</strong></p>
+<p>嗯</p>
+<p><strong>耗子</strong></p>
+<p>@小妹<br>为什么jq要这么写呢</p>
+<p><strong>耗子</strong></p>
+<p>直接调用全局的window不行么</p>
+<p><strong>小妹</strong></p>
+<p>哦 这个不太明白</p>
+<p><strong>小妹</strong></p>
+<p>防止冲突？</p>
+<p>使window唯一？</p>
+<p>？</p>
+<p><strong>小妹</strong></p>
+<p>还是说函数执行了 挂在window下的全局变量也 就消失了？</p>
+<p><strong>耗子</strong></p>
+<p>不是</p>
+<p>只是为了代码压缩时能省一些字节</p>
+<p>压缩后局部变量可以简化</p>
+<p>最后变成 (function(a){})(window);</p>
+<p><strong>小妹</strong></p>
+<p>哦 原来是这样</p>
+<p>学了一个知识点。。</p>
+<p><strong>耗子</strong></p>
+<p>如果是全局变量或者对象的成员方法，<br>压缩工具担心别的地方会被调用</p>
+<p>就不敢乱改变量名</p>
+<p><strong>小妹</strong></p>
+<p>哦</p>
+<p><strong>小妹</strong></p>
+<p>那这样的话 全局变量怎么压缩呢</p>
+<p><strong>耗子</strong></p>
+<p>不能压缩，不过也有极限的压缩工具分析全站代码后敢压，但这可能不够安全。</p>
+<p><strong>小妹</strong></p>
+<p>这种是把立即执行函数里的window压缩成a了？</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>是的，形参都是局部变量，可以放心地压。</p>
+<p>如果你代码里要多次使用window变量就能省出不少字节了</p>
+<p><strong>小妹</strong></p>
+<p>哦 说个题外话 有关js压缩的问题</p>
+<p><strong>小妹</strong></p>
+<p>我发现压缩后的js 函数名都没有给压缩 原来是因为函数名要被调用的</p>
+<p><strong>耗子</strong></p>
+<p>其实除了用括号包住function让函数自运行外</p>
+<p>还有一些变态的写法</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">+ <span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{</span></span></div><div class="line"></div><div class="line">}<span class="params">()</span>;</div><div class="line"></div><div class="line">-<span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{</span></span></div><div class="line"></div><div class="line">}<span class="params">()</span>;</div><div class="line"></div><div class="line">~ <span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{</span></span></div><div class="line"></div><div class="line">}<span class="params">()</span>;</div><div class="line"></div><div class="line">void <span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{</span></span></div><div class="line"></div><div class="line">}<span class="params">()</span>;</div><div class="line">...</div></pre></td></tr></table></figure>
+
+<p>也能立即运行,但不推荐，bootstrap的脚本库里这么写的，我认为属于歪招，会影响返回值</p>
+<p><strong>小妹</strong></p>
+<p>哦 这样也可以啊</p>
+<p>这种算规范的写法吗</p>
+<p>还是属于奇技淫巧？</p>
+<p>发现好多奇葩的技巧 在js里面</p>
+<p>但不知道算不算规范 用的都不安心</p>
+<p><strong>耗子</strong></p>
+<p>好<br>总结下立即调用函数吧</p>
+<p><strong>它是js里最常见的一种写法，能保护作用域减少冲突</strong></p>
+<p><strong>黄朋全</strong></p>
+<p>最简单最安心</p>
+<p><strong>小妹</strong></p>
+<p>嗯 是的 我现在一般开始写个js 都乣这样写：<br>;(function($){<br>})(window.jQuery)</p>
+<p><strong>耗子</strong></p>
+<p>小妹这是个好习惯，不过现在amd和cmd的规范里有更好的方法，理论上可以0全局变量。你前面那个分号是为了防止上一个js文件合并时和上一句有冲突，不过现在的压缩工具都聪明了，呵呵。</p>
+<p><strong>小妹</strong></p>
+<p>嘿嘿 是老大给逼出来的</p>
+<p><strong>相等比较</strong></p>
+<p><strong>耗子</strong></p>
+<p>下一个说相等比较<br>js里有 ==和===</p>
+<p>一句话<br>永远不要用 == 而要用===,<br>它另一对兄弟也是 ，永远使用 !== 不使用!=</p>
+<p><strong>黄朋全</strong></p>
+<p>php也有===</p>
+<p><strong>小妹</strong></p>
+<p>哦 记住了 耗子老大 这个非常重要</p>
+<p><strong>耗子</strong></p>
+<p>嗯弱类型语言</p>
+<p><strong>黄朋全</strong></p>
+<p>java就没有</p>
+<p><strong>小妹</strong></p>
+<p>我也要改改我那经常用==的坏毛病了</p>
+<p><strong>黄朋全</strong></p>
+<p>=是赋值，==是比较</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>所有写java的程序员可能会带上这样的习惯<br>但在js里这是不好的习惯</p>
+<p><strong>小妹</strong></p>
+<p>但是好像不推荐用===和undefined来比较啊</p>
+<p><strong>小妹</strong></p>
+<p>@耗子</p>
+<p><strong>耗子</strong></p>
+<p>为什么不推荐</p>
+<p><strong>小妹</strong></p>
+<p>我没太看仔细 是乌龟书上说的 好像可以用！来代替</p>
+<p><strong>小妹</strong></p>
+<p>对了</p>
+<p><strong>耗子</strong></p>
+<p>这种情况其实我觉得蛮好<br>不过有点臃肿，看具体情况吧，用!可能0和’’也能case到，但不一定是你期待的</p>
+<p><strong>小妹</strong></p>
+<p>记起来了</p>
+<p><strong>耗子</strong></p>
+<p>大部分情况下我们不用区分undfined和null<br>所以减少些代码<br>可以</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="variable">a =</span>== undefined || <span class="variable">a =</span>== <span class="constant">null</span>)</div></pre></td></tr></table></figure>
+
+<p>会被简写成</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="variable">a =</span>= <span class="constant">null</span>)</div></pre></td></tr></table></figure>
+
+<p>甚至</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(!! <span class="operator">a</span>)</div></pre></td></tr></table></figure>
+
+<p>不过这有时候是有问题的<br>如果a是0或者flase或者’’，也是能通过的</p>
+<p><strong>耗子</strong></p>
+<p>jq里只在比较null的情况下会使用==否则都是===</p>
+<p><strong>小妹</strong></p>
+<p>哦 记住了</p>
+<p><strong>耗子</strong></p>
+<p>好</p>
+<p>再说下一个</p>
+<p><strong>eval</strong></p>
+<p><strong>耗子</strong></p>
+<p>乌龟书和道格拉斯爷爷的建议都是永远不使用eval</p>
+<p><strong>小妹</strong></p>
+<p>有例外</p>
+<p><strong>小妹</strong></p>
+<p>处理ajax json字符串返回值的时候</p>
+<p><strong>小妹</strong></p>
+<p>可以用</p>
+<p><strong>耗子</strong></p>
+<p>这个可以用JSON.parse</p>
+<p><strong>牛牛</strong></p>
+<p>袄</p>
+<p><strong>小妹</strong></p>
+<p>低端浏览器</p>
+<p><strong>小妹</strong></p>
+<p>不支持JSON.</p>
+<p><strong>周娜</strong></p>
+<p>这种情况，我也是一直用eval呢</p>
+<p><strong>耗子</strong></p>
+<p>你可以封一个方法<br>把eval放在这个方法里</p>
+<p>然后别的地方不再使用eval</p>
+<p><strong>小妹</strong></p>
+<p>这个怎么封</p>
+<p><strong>耗子</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typeof</span> <span class="built_in">window</span>.JSON === <span class="string">'undefined'</span> && (<span class="built_in">window</span>.JSON = {</div><div class="line">    parse: <span class="function"><span class="keyword">function</span><span class="params">(jsonString)</span></span>{</div><div class="line">        <span class="keyword">return</span> <span class="built_in">eval</span>( <span class="string">'('</span> + jsonString + <span class="string">')'</span>);</div><div class="line">    }</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>当然，这会有一些安全风险</p>
+<p><strong>小妹</strong></p>
+<p>哦哦</p>
+<p><strong>耗子</strong></p>
+<p>这样只会在一个很小的范围内使用eval<br>而不会滥用,</p>
+<p><strong>小妹</strong></p>
+<p>嗯 好方法</p>
+<p><strong>周娜</strong></p>
+<p>能说说为什么不能直接用eval吗？</p>
+<p><strong>小妹</strong></p>
+<p>性能吧</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>1是性能， 2是安全， 3是作用域</p>
+<p><strong>黄朋全</strong></p>
+<p>eval是干嘛的</p>
+<p><strong>牛牛</strong></p>
+<p>在js里面执行另一段js代码</p>
+<p><strong>小妹</strong></p>
+<p>eval参数是字符串 可以立即执行参数里的代码</p>
+<p><strong>黄朋全</strong></p>
+<p>哦</p>
+<p><strong>耗子</strong></p>
+<p>eval可以运行一段字符串，js引擎不能预先知道结果，无法进行编译期优化</p>
+<p><strong>牛牛</strong></p>
+<p>我感觉倒不是安全问题</p>
+<p><strong>黄朋全</strong></p>
+<p>提供给别人攻击用的吗</p>
+<p><strong>黄朋全</strong></p>
+<p>主要还是安全问题吧</p>
+<p><strong>小妹</strong></p>
+<p>我感觉主要是性能问题</p>
+<p><strong>牛牛</strong></p>
+<p>这个只是一方面吧 主要是被放在字符串里的代码我觉得相对来说比较难调试</p>
+<p><strong>牛牛</strong></p>
+<p>而且那些 作用域 等问题</p>
+<p><strong>牛牛</strong></p>
+<p>可能更难控制</p>
+<p><strong>耗子</strong></p>
+<p>另一个问题是作用域</p>
+<p>eval 函数会在当前作用域中执行一段 JavaScript 代码字符串。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line">function <span class="func"><span class="keyword">func</span><span class="params">()</span></span> {</div><div class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line">    eval('a = <span class="number">3</span>');</div><div class="line">    <span class="keyword">return</span> a;</div><div class="line">}</div><div class="line"><span class="func"><span class="keyword">func</span><span class="params">()</span></span>; <span class="comment">// 3</span></div><div class="line">a; <span class="comment">// 1</span></div></pre></td></tr></table></figure>
+
+<p>但是 eval 只在被直接调用并且调用函数就是 eval 本身时，才在当前作用域中执行。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line">function <span class="func"><span class="keyword">func</span><span class="params">()</span></span> {</div><div class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line">    <span class="keyword">var</span> b = eval;</div><div class="line">    b('a = <span class="number">3</span>');</div><div class="line">    <span class="keyword">return</span> a;</div><div class="line">}</div><div class="line"><span class="func"><span class="keyword">func</span><span class="params">()</span></span>; <span class="comment">// 2</span></div><div class="line">a; <span class="comment">// 3</span></div></pre></td></tr></table></figure>
+
+<p>我觉得是给别人注入式攻击提供了接口。</p>
+<p><strong>耗子</strong></p>
+<p>如果eval要解析的是一个不信任的源的时候就很危险了<br>另外eval还有几种其它的形式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">setTimeout(<span class="string">'string'</span>, <span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="keyword">new</span> <span class="function"><span class="keyword">Function</span><span class="params">(<span class="string">'...'</span>)</span></span>;</div></pre></td></tr></table></figure>
+
+<p>setTimeout和setInterval中这个’string’字符串总是在全局作用域中执行，因此 eval 在这种情况下没有被直接调用<br>这两种也都是不推荐使用的<br>另外像@牛牛 说的，查bug的行数也会出问题</p>
+<p><strong>小妹</strong></p>
+<p>嗯 耗子说的对</p>
+<p><strong>牛牛</strong></p>
+<p>不过这个提供了很强的动态特性</p>
+<p><strong>耗子</strong></p>
+<p>是的<br>eval的代码的动态性使得js引擎无法对它进行运行前优化，所以性能会损失</p>
+<p><strong>简说下原始值和包装类型</strong></p>
+<p><strong>耗子</strong></p>
+<p>好<br>最后一个了<br>简说下原始值和包装类型</p>
+<p><strong>耗子</strong></p>
+<p>js里声明一个数组<br>可以这样<br>var arr = new Array();<br>arr[0] = 0,<br>arr[1] = 1;</p>
+<p><strong>耗子</strong></p>
+<p>任何时候不推荐这种写法</p>
+<p><strong>耗子</strong></p>
+<p>因为写成  var arr = [0, 1];<br>更易读</p>
+<p><strong>耗子</strong></p>
+<p>另外new Array还有一种不明确性</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">比如 <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">3</span>) ; <span class="comment">// 得到的是 [undefined, undefined, undefined]而不是[3]</span></div><div class="line">但 <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">3</span>,<span class="number">4</span>); <span class="comment">// 得到的却是 [3, 4];</span></div></pre></td></tr></table></figure>
+
+<p><strong>小妹</strong></p>
+<p>嗯</p>
+<p><strong>耗子</strong></p>
+<p>同样的<br>也不建议使用<br>new Number();<br>new Object();<br>new String();</p>
+<p><strong>耗子</strong></p>
+<p>主要问题一是代码变得臃肿，二是用typeof运算得到的全是’object’,<br>毫无意义的结果.js中可以动态地将原始值转化成包装类型<br>如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">'haozi'.<span class="built_in">toString</span>();</div><div class="line">['haozi'].pop();</div><div class="line">{name: 'haozi'}.valueOf();</div><div class="line"></div><div class="line"><span class="comment">// 数字有个bug，直接</span></div><div class="line"><span class="number">5</span>.<span class="built_in">toString</span>(); <span class="comment">//会报语法错误，</span></div><div class="line">但是可以</div><div class="line">(<span class="number">5</span>).<span class="built_in">toString</span>();</div><div class="line"><span class="number">5</span>..<span class="built_in">toString</span>();</div><div class="line"><span class="number">5.0</span>.<span class="built_in">toString</span>();</div></pre></td></tr></table></figure>
+
+<p>所以说他们也都是对象，<br>js里只有null和undefined不是对象</p>
+<p><strong>小妹</strong></p>
+<p>嗯<br><strong>开启严格模式</strong></p>
+<p><strong>耗子</strong></p>
+<p>另外，推荐大家在代码里开启strict严格模式，能帮你发现很多问题，<br>只要在代码里写入<br>‘use strict’; 这么个字符串就可以了，这个不细讲了，大家用一用就知道了</p>
+<p><strong>小妹</strong></p>
+<p>感觉咱们越到后面js讨论越深入了<br>感谢耗子的慷慨分享<br>让我复习并学到了很多东西</p>
+<p><strong>耗子</strong></p>
+<p>好了<br>今天就到这里了<br>感恩大家一起来共学</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/03-变量、函数和运算符/" data-id="jiuel7cbubm9dqvb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/04-UI层的松耦合/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【共学】《编写可维护的javascript》04-UI层的松耦合
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/node中实现sleep/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">node中实现sleep</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="文章在原站点中的ID" data-title="文章标题" data-url="文章网址"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"haozide"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+
+</section>
+            
+              <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/canvas/" style="font-size: NaNpx;">canvas</a><a href="/tags/other/" style="font-size: NaNpx;">other</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+          </li>
+        
+          <li>
+            <a href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+          </li>
+        
+          <li>
+            <a href="/post/404状态码的坑/">404状态码的坑</a>
+          </li>
+        
+          <li>
+            <a href="/post/use-git-in-local/">use git in local</a>
+          </li>
+        
+          <li>
+            <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+            
+          </div>
+          <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 耗子<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+</nav>
+        <script src="http://s4.qhimg.com/static/74e86b3d770b4acd.js"></script>
+
+
+
+
+
+
+
+<s style="display:none"><script src="http://s19.cnzz.com/stat.php?id=5459156&web_id=5459156"></script></s>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41952285-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+      </div>
+    </body>
+    </html>
+

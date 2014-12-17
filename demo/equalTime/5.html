@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>equalTime</title>
+    <style>
+        #ipt{width: 95%;-webkit-box-sizing:border-box; height: 50px;}
+        #btn {width:95%; height: 50px;margin-top:10px;}
+    </style>
+</head>
+<body>
+    <div id="printer"></div>
+    <input type="text" id="ipt">
+    <button id="btn">equal</button>
+
+
+
+
+
+
+<script>
+    function toInt(float) {
+        return 0 | float;
+    }
+    function equalTime(timeString) {
+        var now = +new Date();
+        timeString = timeString.replace(/-/g, '/') + ' GMT+0800';
+        var second = (now - new Date(timeString)) / 1000;
+        if(second > 86400) {
+           return toInt(second / 86400) +'天前';
+        } else if(second > 3600) {
+           return toInt(second / 3600) + '小时前';
+        } else if(second > 60) {
+           return toInt(second / 60) + '分钟前';
+        } else if (second > 1){
+           return toInt(second) + '秒前';
+        } else {
+            return '1秒前';
+        }
+    }
+</script>
+
+
+
+
+
+
+<script>
+    (function () {
+        var btn = document.getElementById('btn'),
+            ipt = document.getElementById('ipt'),
+            printer = document.getElementById('printer');
+        ipt.value = (function () {
+            // '2014-01-22 13:20:19'
+            function addZero (n) {
+                return n > 9 ? n : ('0' + n);
+            }
+            var d = new Date();
+            d.setSeconds(d.getSeconds() - 55);
+            return d.getFullYear() +  '-' +
+                   addZero(d.getMonth() + 1) + '-' +
+                   addZero(d.getDate()) + ' ' +
+                   addZero(d.getHours()) + ':' +
+                   addZero(d.getMinutes()) + ':'+
+                   addZero(d.getSeconds());
+        })();
+        btn.ontouchstart = function () {
+            printer.innerHTML = equalTime(ipt.value);
+        }
+    })();
+</script>
+</body>
+</html>

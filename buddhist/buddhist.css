@@ -1,0 +1,72 @@
+.fhcyj{ color: #333; font-family: "Microsoft Yahei" ; padding: 80px;}
+.fhcyj p{ line-height: 2; font-size: 1.5em; }
+.fhcyj em,.fhcyj .em{border-radius: 0.3em; border:0.3em solid #94c6c0; display: inline-block; width:0px; height: 0px;  vertical-align: 8px; margin-left: 5px; cursor: pointer;position: relative;}
+.fhcyj h1{font-size: 3em;}
+.fhcyj h2{font-size: 2.25em;}
+.fhcyj h3{font-size: 2em}
+.fhcyj em:hover i{
+    display: block;
+}
+.fhcyj i{
+    display: none;
+    position: absolute;
+    top: -80px;
+    right: -35px;
+    background: #94c6c0;
+    padding: 8px;
+    line-height: 1.2; color:#fff;
+    font-style: normal;
+    border: 2px solid #a6d5cf;
+    border-radius: 5px;
+    width: 70px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 0.5em;
+}
+.fhcyj i:before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    background: #94c6c0;
+    border: 2px solid #a6d5cf;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.fhcyj .pre{
+    border-left:10px solid #94c6c0;
+    background: #f0f0f0;
+    padding: 10px 25px;
+    font-size: 1em;
+    color: #444;
+    margin-bottom: 3em;
+    position: relative;
+}
+.fhcyj .pre p{
+    font-size: 1.2em;
+}
+.fhcyj .td{
+    color: #333;
+    text-decoration: none;
+    border-bottom: 3px solid #94c6c0;
+}
+.fhcyj .pre:hover .gtop{
+    opacity: 1;
+    -webkit-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+}
+.fhcyj .gtop{
+    color: #94c6c0;
+    text-decoration: none;
+    position: absolute;
+    right: 50px;
+    bottom: 30px;
+    font-size: 2em;
+    font-weight: bold;
+    opacity: 0
+}

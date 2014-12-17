@@ -1,0 +1,685 @@
+ 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Archives - 耗子的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+        <link rel="alternative" href="/atom.xml" title="耗子的" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    
+</head>
+    <body>
+      <div id="container">
+        <div id="wrap">
+          <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">耗子的</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://haozi.de"></form>
+      </div>
+    </div>
+  </div>
+</header>
+          <div class="outer">
+            <section id="main">
+  
+    <article id="post-检测页面全局变量脚本" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/检测页面全局变量脚本/" class="article-date">
+  <time datetime="2014-10-25T04:40:40.000Z" itemprop="datePublished">Oct 25 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上次说到严格模式也不能完全保证不会意外跑出全局变量，所以最好还有一种更方便的检测方法。</p>
+<h2 id="jshint">jshint</h2>
+<h2 id="亡羊补牢，后知后觉">亡羊补牢，后知后觉</h2>
+<p>由于不同的流量器宿主全局方法并不一样，但同一个浏览器的不内window实例一定是一样的，所以我们可以构建一个临时的iframe，里面的window对象是干净无污染的，只要拿topwindow和这个iframeWindow中的变量进行对比，就行。如果是用户不小心抛出去的全局变量，一定是可写可读的，不可能是用Object.Object.defineProperty搞出来的只读的常量。于是便有了以下代码: 可将此链接直接拖到收藏夹栏使用<a href="javascript:eval(decodeURIComponent('(function(e%2Ct%2Cn%2Cr)%7Bn%3Dt.createElement(%22script%22)%2Cr%3Dt.body%2Cn.onload%3Dn.onerror%3Dfunction()%7Br.removeChild(n)%7D%2Cn.setAttribute(%22charset%22%2C%22utf-8%22)%2Cn.src%3D%22http%3A%2F%2Fhaozi.de%2Fdemo%2FcheckGlobalVar%2FcheckGlobalVar.js%3F%3D%22%2B(new%20Date%2F864e5).toFixed()%2Cr.appendChild(n)%7D)(top%2Cdocument)'))" target="_blank" rel="external">检测全局变量</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="list">(<span class="title">function</span><span class="list">(<span class="title">topWindow</span>, document)</span>{</span></div><div class="line">    var iframeWindow<span class="comment">;</span></div><div class="line">    var whiteList = [/<span class="variable">*'jQuery', '$', ...*</span>/]<span class="comment">;</span></div><div class="line">    var ret = []<span class="comment">;</span></div><div class="line">    function checkGlobalVar<span class="list">()</span> {</div><div class="line">        var iframe = document.createElement<span class="list">(<span class="quoted">'iframe</span>')</span>, i, originValue<span class="comment">;</span></div><div class="line">        document.body.appendChild<span class="list">(<span class="title">iframe</span>)</span><span class="comment">;</span></div><div class="line">        iframeWindow = iframe.contentWindow<span class="comment">;</span></div><div class="line">        for<span class="list">(<span class="title">i</span> in topWindow)</span> {</div><div class="line">            if<span class="list">(!<span class="list">(<span class="title">i</span> in iframeWindow)</span> <span class="keyword">&&</span> !~whiteList.indexOf<span class="list">(<span class="title">i</span>)</span>)</span> {</div><div class="line">                originValue = topWindow[i]<span class="comment">;</span></div><div class="line">                topWindow[i] = '耗子么么哒'<span class="comment">; // 写一个不可能是系统预设的值</span></div><div class="line">                if<span class="list">(<span class="title">topWindow</span>[i] === '耗子么么哒')</span> {</div><div class="line">                    iframeWindow.console.info<span class="list">(<span class="title">i</span>)</span><span class="comment">; // 防止重写了topWindow的console</span></div><div class="line">                    ret.push<span class="list">(<span class="title">i</span>)</span><span class="comment">;</span></div><div class="line">                }</div><div class="line">                topWindow[i] = originValue<span class="comment">;</span></div><div class="line">            }</div><div class="line">        }</div><div class="line">        iframeWindow.console.warn<span class="list">('共找到'  + ret.length + '个全局变量<span class="comment">;');</span></span></div><div class="line">        document.body.removeChild<span class="list">(<span class="title">iframe</span>)</span><span class="comment">; // 干完坏事会死灭迹</span></div><div class="line">        iframeWindow = null<span class="comment">;</span></div><div class="line">    }</div><div class="line">    setTimeout<span class="list">(<span class="title">function</span><span class="list">()</span>{</span></div><div class="line">        if<span class="list">(!document.body)</span> {</div><div class="line">            alert<span class="list">('页面还没加载完！')</span><span class="comment">;</span></div><div class="line">            return<span class="comment">;</span></div><div class="line">        }</div><div class="line">        checkGlobalVar<span class="list">()</span><span class="comment">;</span></div><div class="line">    }, <span class="number">1000</span>)</div><div class="line">})<span class="list">(<span class="title">top</span>, document)</span><span class="comment">;</span></div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/检测页面全局变量脚本/" data-id="wza1xb5jlwbagpnm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-严格模式下arguments的限制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/严格模式下arguments的限制/" class="article-date">
+  <time datetime="2014-07-12T13:06:06.000Z" itemprop="datePublished">Jul 12 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用’use strict’可以很简单地开启严格模式<br>严格模式下有以下特征与普通模式不一样，需要注意</p>
+<h2 id="一、不可以隐式声明变量">一、不可以隐式声明变量</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="pi">'use strict'</span>;</div><div class="line">a = <span class="number">1</span>; <span class="comment">// ReferenceError : a</span></div></pre></td></tr></table></figure>
+
+<p>但是严格模式的检测是在执行期的，所以：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//不报错</span></div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line"><span class="pi">    'use strict'</span>;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        a = <span class="number">1</span>;</div><div class="line">    }</div><div class="line">})();</div><div class="line"><span class="comment">// 只发生了函数声明</span></div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 赋给一个变量，再执行</span></div><div class="line">  <span class="keyword">var</span> foo = (<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line"><span class="pi">    'use strict'</span>;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        a = <span class="number">1</span>;</div><div class="line">    }</div><div class="line">})();</div><div class="line">b = <span class="number">1</span>; <span class="comment">// b声明成功</span></div><div class="line">foo(); <span class="comment">// ReferenceError: a</span></div><div class="line"><span class="comment">// 此时foo是闭包，执行的时候会查找闭包的作用域，发现启用了严格模式，所以报错</span></div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//直接调用，报错 ReferenceError: a</span></div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line"><span class="pi">    'use strict'</span>;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        a = <span class="number">1</span>;</div><div class="line">    }</div><div class="line">})()();</div></pre></td></tr></table></figure>
+
+<p>一个script标签里的严格声明，并不能影响另一个script里的代码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"><span class="pi"></span></span></div><div class="line">    'use strict';</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    a = <span class="number">1</span>;<span class="comment">// 不报错</span></div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>‘use strict’并需放在一个 作用域、语句块的开头，可以有空格，但不能有其它声明；</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// a和b都能声明成功，a为局部变量，b为全局变量</span></div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">    a = <span class="number">1</span>;</div><div class="line">    <span class="string">'use strict'</span>;</div><div class="line">    <span class="keyword">var</span> a;</div><div class="line">    b = <span class="number">2</span>;</div><div class="line">})();</div></pre></td></tr></table></figure>
+
+<h2 id="二、不可以使用with,_不赘述">二、不可以使用with, 不赘述</h2>
+<h2 id="三、this不指向window,_不赘述">三、this不指向window, 不赘述</h2>
+<h2 id="四、创建eval作用域">四、创建eval作用域</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="string">'globalVar'</span>;</div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line"><span class="pi">    'use strict'</span>;</div><div class="line">    <span class="keyword">var</span> a = <span class="string">'localVar'</span>;</div><div class="line">    <span class="built_in">eval</span>(<span class="string">'var a = "evalVar"; console.log(a)'</span>); <span class="comment">// "evalVar"</span></div><div class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// 'localVar'</span></div><div class="line">})();</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// "globalVar"</span></div></pre></td></tr></table></figure>
+
+<h2 id="四arguments">四arguments</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> <span class="params">(a)</span> </span>{</div><div class="line"><span class="pi">    'use strict'</span>;</div><div class="line">    <span class="built_in">arguments</span>[<span class="number">0</span>] = <span class="string">'changeA'</span>;</div><div class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// 严格模式为1 ,普通模式为 changeA</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.caller)<span class="comment">// Uncaught TypeError: 'caller', 'callee', and 'arguments' properties ...</span></div><div class="line">}</div><div class="line">foo(a);</div></pre></td></tr></table></figure>
+
+<p>所以建议不要直接操作arguments,还是使用Array.prototype.slice.call(arguments)转成真数组才使用。<br>如果必须在函数内部调用自身进行递归，请给函数具名。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">setTimeout(<span class="reserved">function</span> <span class="keyword">loop</span>() {</div><div class="line">    <span class="built_in">console</span>.clear();</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">new</span> Date());</div><div class="line">    setTimeout(<span class="keyword">loop</span>, <span class="number">1000</span>);</div><div class="line">}, <span class="number">1000</span>);</div><div class="line"><span class="keyword">loop</span> <span class="regexp">//</span> <span class="keyword">loop</span> <span class="keyword">is</span> <span class="keyword">not</span> defined</div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/严格模式下arguments的限制/" data-id="4b03zfwsy8gkf150" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-404状态码的坑" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/404状态码的坑/" class="article-date">
+  <time datetime="2014-07-10T15:23:06.000Z" itemprop="datePublished">Jul 10 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/404状态码的坑/">404状态码的坑</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网站中不存在的网址应该返回404状态，并给用户展示一个友好的404页面。这是搜索引擎给我们的建议，关于404页面的设计甚至成为<a href="http://www.hongkiat.com/blog/60-really-cool-and-creative-error-404-pages/" target="_blank" rel="external">一门艺术</a></p>
+<p>然而不幸的是如果直接http状态码返回404，在我大天朝是要吃亏的，下面这是用户网页被劫持的情况：<br><img src="http://p7.qhimg.com/t01b64bad258e2efb4b.png" alt=""></p>
+<p>无良的运营商和各种工具条，还有一些浏览器，都会对网站超时和404状态做处理。这种劫持的404页面不仅样貌丑陋，还可能让用户无法再回到你的主站。</p>
+<p>通过试验，404状态会稳定劫持，301和302状态不会，200也不会。200状态会被搜索引擎判为内容重复；301状态永久重定向也会被搜索引擎收录，另外301状态会被浏览器缓存，不请求服务器会丢统计日志；302状态是一种临时重定向，不会被服务器缓存，语义上也说得过去。综上所述，如果想告知用户页面不存在，又不想被劫持，请使用302重定向到error.html页面。 目前京东、淘宝、百度都是这么做的。</p>
+<p>在nginx中配置302转向非常简单，只需要改一行代码：<br>把</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">error_page</span>  <span class="number">404</span>  /<span class="number">404</span>.html;</div></pre></td></tr></table></figure>
+
+<p>改成</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">error_page</span>  <span class="number">404</span>  <span class="url">http://haozi.de/404.html</span>;</div></pre></td></tr></table></figure>
+
+<p>改成绝对路径，nginx就会自动把404变成302重定向了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/404状态码的坑/" data-id="jyv623593xcgcjxp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-use-git-in-local" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/use-git-in-local/" class="article-date">
+  <time datetime="2014-03-27T12:55:16.000Z" itemprop="datePublished">Mar 27 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/use-git-in-local/">use git in local</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>提到git，很多人可能想到的是github。其实自己一个人本地也可以用git来管理自己的代码。</p>
+<p>公司用的代码管理工具是svn。平时在开发中经常会遇到这样的问题：</p>
+<ol>
+<li>要完成a和b两个需求，两个需求都要改c.js。现在要求上线a需求，b需求还不能上线。</li>
+<li>正在开发一个需求，改了好多文件。这时突然线上出现一个紧急bug需求马上改。</li>
+</ol>
+<p>svn在这一方面做得很差，咨询过别的同事，出现第一种情况一般是把b需求的代码注释掉。出现第二种情况是将线上代码分支拉下来，改完还要把代码在本地代码库上再改一变。<br>对于代码的branch和merge用git就太简单了。可以直接在你的本地svn代码文件夹里再开一个git</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> ~/yourCode</div><div class="line">git init</div><div class="line"><span class="keyword">vi</span> .gitignore</div><div class="line">把.svn文件夹忽略掉</div></pre></td></tr></table></figure>
+
+<p>为了防止把.git文件夹传到svn上，我们还要改下svn的忽略目录:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vi .subversion/config</div><div class="line">找到global-ignores 所在行，把行首的注释符去掉</div><div class="line">在行末加上 .svn （和前面有一个空格）</div><div class="line">global-ignores = <span class="keyword">*</span>.o <span class="keyword">*</span>.lo <span class="keyword">*</span>.la <span class="keyword">*</span>.al .libs <span class="keyword">*</span>.so <span class="keyword">*</span>.so.[0-9]<span class="keyword">*</span> <span class="keyword">*</span>.a <span class="keyword">*</span>.pyc <span class="keyword">*</span>.pyo .git<span class="keyword">*</span></div></pre></td></tr></table></figure>
+
+<p>这样两者就不相互干扰了</p>
+<h2 id="把svn代码都灌入git仓库:">把svn代码都灌入git仓库:</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">add</span> .</div><div class="line">git commit -<span class="operator">a</span> -m <span class="string">"init"</span></div></pre></td></tr></table></figure>
+
+<h2 id="根据需求新拉一个分支，不建意在master分支下开发">根据需求新拉一个分支，不建意在master分支下开发</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">git</span> branch hotfix</div></pre></td></tr></table></figure>
+
+<h2 id="切换到hotfix分支">切换到hotfix分支</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">git</span> checkout hotfix</div></pre></td></tr></table></figure>
+
+<h2 id="修复代码，修完bug，完成测试。">修复代码，修完bug，完成测试。</h2>
+<h2 id="合并代码到master分支">合并代码到master分支</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git checkout master</div><div class="line">git <span class="operator"><span class="keyword">merge</span> hotfix</span></div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/use-git-in-local/" data-id="q4kvh72mnjw0uks8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/" class="article-date">
+  <time datetime="2014-03-22T20:03:46.000Z" itemprop="datePublished">Mar 23 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="出错原因">出错原因</h2>
+<p>新版的chrome中如果如果canvas渲染得是一张第三方域的图片的话，这个canvas会被标记为tainted，将不能使用getImageData方法。</p>
+<h2 id="解决方法">解决方法</h2>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/CORS_Enabled_Image?redirectlocale=en-US&amp;redirectslug=CORS_Enabled_Image" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/CORS_Enabled_Image?redirectlocale=en-US&amp;redirectslug=CORS_Enabled_Image</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/" data-id="tldsaks8p8vcvsgk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/canvas/">canvas</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-客户端存储" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/客户端存储/" class="article-date">
+  <time datetime="2014-03-21T17:43:09.000Z" itemprop="datePublished">Mar 22 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/客户端存储/">客户端存储</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="cookie_和_cookie_的局限">cookie 和 cookie 的局限</h2>
+<p>我们知道HTTP 本身是一种无状态、无连接的协议，用户在浏览器上请求一个动作时，服务器不会知道用户上次动作做了什么，因此如果要存储诸如登录与否、已录入文本等状态信息是非常麻烦的，对于开发交互式的程序来说这很致命，而cookie技术的发明则满足了大部分的状态存储的需求。 从根本上来讲，cookie 其实就是一段存储在客户端（浏览器）的文本，我们既可以在服务器响应返回时设置cookie的值，也可以在前端通过 js 进行修改。</p>
+<p>我们考虑一个最简单的登录场景来说明 cookie 是如何实现状态存储的，当你向百度服务器发送了你的用户名密码并且验证过你的身份之后，服务器端会在响应客户端时的 HTTP 包的包头中的加上一个cookie字段，这个字段则可能是类似 BAIDUID=XXX 的值，是服务器分配给你的唯一标识符，这段文本将存储在你的计算机磁盘中，当你继续浏览百度的其他页面时，每次http请求都会带上cookie这个字段，这样服务器端就可以确认这个请求依然来自于登录后的你，从而从某种意义上来说“保存”了登录状态，这时读者可能要问了，不同网站登录时都会发送吗？那岂不是谷歌就可以知道我百度的账号了？当然不是，cookie的使用是有限制的，这个限制便来自于域，不同域间的cookie是不会影响也不可访问。（注：域限制是Cookie安全的基础，这个话题有很多值得深入讨论的点，比如跨父域子域进行ajax访问，多个域名时如何跨域进行身份验证等）<br>
+        
+          <p class="article-more-link">
+            <a href="/post/客户端存储/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/客户端存储/" data-id="le14huek794h6f4x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-waiting for network configuration" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/waiting for network configuration/" class="article-date">
+  <time datetime="2013-07-12T01:43:14.000Z" itemprop="datePublished">Jul 12 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/waiting for network configuration/">ubuntu开机出现waiting for network configuration的解决方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天把机器带到朋友家上网,朋友家用的是宽带拨号,于是便用pppoeconf命令拨号</p>
+<p>今天把机器带回公司,发现怎么也找不到wifi了,开机时出现waiting fo network configuration的提示,一分多种进入后状态栏的网络小图标也不见了.</p>
+<p>上网找了下解决方法:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">sudo</span> vi /etc/network/interfaces</div></pre></td></tr></table></figure>
+
+<p>删除</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">auto <span class="keyword">lo</span></div><div class="line">iface <span class="keyword">lo</span> inet loopback</div></pre></td></tr></table></figure>
+
+<p>以外的所有字段,保存,退出,重启,o了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/waiting for network configuration/" data-id="ckh8s1xqhctdjlt0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-05-避免使用全局变量" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/05-避免使用全局变量/" class="article-date">
+  <time datetime="2013-07-08T17:58:33.000Z" itemprop="datePublished">Jul 9 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/05-避免使用全局变量/">【共学】《编写可维护的javascript》05-避免使用全局变量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>耗子</strong></p>
+<p>今天我们讲的第6章比较简单</p>
+<p>避免使用全局变量</p>
+<p>这个大家有没有  概念呢</p>
+<p><strong>耗子</strong></p>
+<p>@小妹 要不说一下js中产生全局变量的方法吧</p>
+<p><strong>小妹</strong></p>
+<p>好</p>
+
+        
+          <p class="article-more-link">
+            <a href="/post/05-避免使用全局变量/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/05-避免使用全局变量/" data-id="cnc1vf8xd6ct6rtv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-04-UI层的松耦合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/04-UI层的松耦合/" class="article-date">
+  <time datetime="2013-07-04T13:38:33.000Z" itemprop="datePublished">Jul 4 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/04-UI层的松耦合/">【共学】《编写可维护的javascript》04-UI层的松耦合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>耗子</strong></p>
+<p>今晚讲解耦</p>
+<p><strong>张继霞</strong></p>
+<p>弱弱的问一句是第五章吗？</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>张继霞</strong></p>
+<p>好，我临时抱会儿佛脚预习去</p>
+<p>
+        
+          <p class="article-more-link">
+            <a href="/post/04-UI层的松耦合/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/04-UI层的松耦合/" data-id="sej4aha4oagacaxj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-03-变量、函数和运算符" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/03-变量、函数和运算符/" class="article-date">
+  <time datetime="2013-06-26T17:58:33.000Z" itemprop="datePublished">Jun 27 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/03-变量、函数和运算符/">【共学】《编写可维护的javascript》03-变量、函数和运算符</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>耗子</strong></p>
+<p>今天我们一起学习的是第四章<br>变量、函数和操作符</p>
+<p><strong>耗子</strong></p>
+<p>先大家从变量和函数的声明开始吧</p>
+<p><strong>耗子</strong></p>
+<p>前几章中我们也或多或少地提到了js中变量和函数声明的一些坑</p>
+<p><strong>耗子</strong></p>
+<p>那么大家谁能来回忆总结下呢<br>
+        
+          <p class="article-more-link">
+            <a href="/post/03-变量、函数和运算符/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/03-变量、函数和运算符/" data-id="jiuel7cbubm9dqvb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
+    </nav>
+  
+</section>
+            
+              <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/canvas/" style="font-size: NaNpx;">canvas</a><a href="/tags/other/" style="font-size: NaNpx;">other</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+          </li>
+        
+          <li>
+            <a href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+          </li>
+        
+          <li>
+            <a href="/post/404状态码的坑/">404状态码的坑</a>
+          </li>
+        
+          <li>
+            <a href="/post/use-git-in-local/">use git in local</a>
+          </li>
+        
+          <li>
+            <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+            
+          </div>
+          <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 耗子<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+</nav>
+        <script src="http://s4.qhimg.com/static/74e86b3d770b4acd.js"></script>
+
+
+
+
+
+
+
+<s style="display:none"><script src="http://s19.cnzz.com/stat.php?id=5459156&web_id=5459156"></script></s>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41952285-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+      </div>
+    </body>
+    </html>
+

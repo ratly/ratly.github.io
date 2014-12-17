@@ -1,0 +1,74 @@
+
+    <!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>转换</title>
+    <style>
+        *{
+            margin  : 0;
+            padding : 0;
+        }
+        textarea{
+            width:100%;
+            height: 100px;
+        }
+        #out{height: 400px;}
+        #submit{
+            display     : block;
+            cursor      : pointer;
+            width       : 200px;
+            height      : 50px;
+            margin      : 15px auto;
+            text-align  : center;
+            line-height : 50px;
+            font-weight : 700;
+        }
+    </style>
+</head>
+<body>
+<textarea id="in" placeholder="用浏览器打开你的mht，然后ctrl+a，再ctrl+v到这个文本框里"></textarea>
+如果需要替换姓名，可以用冒号在此隔开，一行一对<br>
+<textarea id="name"></textarea>
+<button id="submit">转换</button>
+<textarea id="out"></textarea>
+
+<script>
+    var oIn   = document.getElementById('in'),
+        oName = document.getElementById('name'),
+        oOut  = document.getElementById('out'),
+        oBtn  = document.getElementById('submit');
+
+    localStorage.names = localStorage.names || encodeURIComponent('李子豪:耗子');
+    oName.value        = decodeURIComponent(localStorage.names);
+    oName.onkeyup = function(){
+        localStorage.names = encodeURIComponent(this.value);
+    }
+    oBtn.onclick = function(){
+        var inText  = oIn.value;
+        var names   = oName.value.trim().split('\n');
+        var outText = '';
+        outText     = inText
+                        .replace(/(.*(\d{2}:){2}\d{2})/g, '\n\n\*\*$1') //人名前加空行
+                        .replace(/((\d{2}:){2}\d{2})/g, '$1\*\*\n\n')   //人名后加空行
+                        .trim()
+//                        .replace(/\s*(\d{2}:){2}\d{2}/g,'')            //删掉时间
+                        .trim();
+
+        for (var i=0, l = names.length; i<l; ++i){
+            var k = names[i].split(/:|：/)[0] || '',
+                v = names[i].split(/:|：/)[1] || '';
+            var reg = new RegExp(k,'g');
+            outText = outText.replace(reg, v);
+        }
+
+        oOut.value = outText;
+        oOut.select();
+    }
+    oOut.onclick = function(){
+        // this.select();
+    }
+</script>
+</body>
+</html>
+

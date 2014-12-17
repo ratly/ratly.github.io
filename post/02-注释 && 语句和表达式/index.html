@@ -1,0 +1,915 @@
+ 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>【共学】《编写可维护的javascript》02-注释 &amp;&amp; 语句和表达式 - 耗子的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+        <link rel="alternative" href="/atom.xml" title="耗子的" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    
+</head>
+    <body>
+      <div id="container">
+        <div id="wrap">
+          <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">耗子的</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://haozi.de"></form>
+      </div>
+    </div>
+  </div>
+</header>
+          <div class="outer">
+            <section id="main"><article id="post-02-注释 &amp;&amp; 语句和表达式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/02-注释 && 语句和表达式/" class="article-date">
+  <time datetime="2013-06-18T15:53:07.000Z" itemprop="datePublished">Jun 18 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【共学】《编写可维护的javascript》02-注释 &amp;&amp; 语句和表达式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>耗子 20:21:16</strong></p>
+<p>今天准备和大家共修的是乌龟书的第二章和第三章</p>
+<p><strong>耗子 20:21:34</strong></p>
+<p>第二章主要讲的是注释怎么写</p>
+<p><strong>耗子 20:21:54</strong></p>
+<p>坑爹啊<br>谁不会写注释呢</p>
+<a id="more"></a>
+
+<p><strong>耗子 20:22:46</strong></p>
+<p>一般在什么时候会写注释？</p>
+<p><strong>朱雪花 20:22:51</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div></pre></td></tr></table></figure>
+
+<p><strong>刘林 20:22:54</strong></p>
+<p>不怎么写注释</p>
+<p><strong>小妹 20:23:13</strong></p>
+<p>我一般会在可能让看的人看不懂的地方注释</p>
+<p><strong>黄朋全 20:23:18</strong></p>
+<p>我现在写注释也少了。</p>
+<p><strong>小妹 20:23:29</strong></p>
+<p>还有就是//TODO</p>
+<p><strong>黄朋全 20:23:31</strong></p>
+<p>刚毕业的时候写代码行行注释</p>
+<p><strong>耗子 20:24:29</strong></p>
+<p>js里的注释是//行注释和/**/块注释</p>
+<p><strong>刘林 20:24:57</strong></p>
+<p>恩，更提倡哪种注释呢？</p>
+<p><strong>耗子 20:25:20</strong></p>
+<p>html里是<!-- -->注释，和xml一致<br>特别注意的是前后都是两个—(像一双小眼睛有木有)</p>
+<p><strong>小妹 20:25:34</strong></p>
+<p>哈哈 这个可以有</p>
+<p><strong>耗子 20:26:02</strong></p>
+<p>虽然浏览器大部分情况下能识别<br>&lt;!—— —-&gt; 这种不对称的情况</p>
+<p><strong>耗子 20:26:27</strong></p>
+<p>css里只能使用/**/块注释</p>
+<p><strong>小妹 20:26:56</strong></p>
+<p>嗯</p>
+<p><strong>小妹 20:26:58</strong></p>
+<p>是的</p>
+<p><strong>黄朋全 20:27:33</strong></p>
+<p>刘林，连接在此，自己下吧。</p>
+<p><strong>耗子 20:27:47</strong></p>
+<p>/*注释有个问题大家知道不</p>
+<p><strong>黄朋全 20:28:28</strong></p>
+<p>这个注释可以在html里面用吗</p>
+<p><strong>耗子 20:28:40</strong></p>
+<p>不可以</p>
+<p><strong>耗子 20:29:50</strong></p>
+<p>/**/块注释有时候会和正则冲突<br>导致不对闭合</p>
+<p><strong>耗子 20:30:20</strong></p>
+<p>道格拉斯爷爷是提倡全部使用单行注释的</p>
+<p><strong>刘林 20:31:47</strong></p>
+<p>为什么单行注释</p>
+<p><strong>黄朋全 20:32:53</strong></p>
+<p>什么情况下会这样？</p>
+<p><strong>耗子 20:33:17</strong></p>
+<p>道格拉斯爷爷觉得多行注释有时候会有嵌套问题<br>能用//一种方式就能解决就不引入两种方式<br>这是他的哲学</p>
+<p><strong>黄朋全 20:33:50</strong></p>
+<p>恩。</p>
+<p><strong>耗子 20:34:05</strong></p>
+<p>乌龟书上是两种注释都提倡使用的</p>
+<p><strong>耗子 20:34:46</strong></p>
+<p>块注释一般出现在方法的前面<br>或者在function的第二行，每一行空行</p>
+<p><strong>黄朋全 20:35:53</strong></p>
+<p>子豪的习惯呢</p>
+<p><strong>黄朋全 20:35:54</strong></p>
+<p>？</p>
+<p><strong>耗子 20:36:17</strong></p>
+<p>我一般是在function的上面使用多行注释</p>
+<p><strong>牛牛 20:36:21</strong></p>
+<p>现在是按注释先行得方法</p>
+<p><strong>黄朋全 20:36:53</strong></p>
+<p>大家一般的习惯是什么？</p>
+<p><strong>牛牛 20:36:56</strong></p>
+<p>嗯 方法 类 用多行 语句用单行</p>
+<p><strong>耗子 20:37:22</strong></p>
+<p>在一些不容易理解的赋值之后加上单行注释<br>如<br>var flag = true; // 为false是表示xx，为true时表示yy</p>
+<p><strong>黄朋全 20:37:28</strong></p>
+<p>我现在一般写doc注释比较多，一般注释不怎么写。</p>
+<p><strong>牛牛 20:37:39</strong></p>
+<p>现在都是先自动生成 然后填充一下</p>
+<p><strong>刘林 20:37:42</strong></p>
+<p>js 有类似于 doxygen 的工具么？</p>
+<p><strong>刘林 20:37:56</strong></p>
+<p>自动把注释生成文档的工具</p>
+<p><strong>耗子 20:37:57</strong></p>
+<p>嗯<br>今天主要想和大家一起学习的就是doc注释</p>
+<p><strong>耗子 20:38:15</strong></p>
+<p>朋全平时怎么使用doc的注释的呢</p>
+<p><strong>黄朋全 20:38:47</strong></p>
+<p>为了生成api文档而写。</p>
+<p><strong>黄朋全 20:39:04</strong></p>
+<p>如果不是api的话，一般不写。</p>
+<p><strong>牛牛 20:39:24</strong></p>
+<p>我都木有怎么用javadoc就是用它自动添加 而已</p>
+<p><strong>黄朋全 20:39:24</strong></p>
+<p>大多是通过命名和逻辑进行自解释。</p>
+<p><strong>耗子 20:39:35</strong></p>
+<p>你用javadoc生成文档么</p>
+<p><strong>黄朋全 20:39:38</strong></p>
+<p>恩</p>
+<p><strong>耗子 20:39:59</strong></p>
+<p>那说下里面的变量和要求吧<br>大家一起学学</p>
+<p><strong>黄朋全 20:39:59</strong></p>
+<p>我习惯用小方法组合。</p>
+<p><strong>黄朋全 20:40:21</strong></p>
+<p>通过方法名自解释</p>
+<p><strong>耗子 20:41:23</strong></p>
+<p>其实js的注释风格就是从javadoc传承来的</p>
+<p><strong>刘林 20:41:40</strong></p>
+<p>嗯，都大同小异啊</p>
+<p><strong>耗子 20:42:24</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/<span class="keyword">*</span><span class="keyword">*</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@name Uploader</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@class 异步文件上传组件，支持ajax、flash、iframe三种方案</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@constructor</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@extends Base</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@requires UrlsInput</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@requires IframeType</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@requires  AjaxType</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@param {Object} config 组件配置（下面的参数为配置项，配置会写入属性，详细的配置说明请看属性部分）</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@param {Button} config.button *，Button按钮的实例</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@param {Queue} config.queue *，Queue队列的实例</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@param {String|Array} config.type *，采用的上传方案</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@param {Object} config.serverConfig *，服务器端配置</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@param {String} config.urlsInputName *，存储文件路径的隐藏域的name名</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@param {Boolean} config.isAllowUpload 是否允许上传文件</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@param {Boolean} config.autoUpload 是否自动上传</span></div><div class="line">    <span class="keyword">*</span> <span class="comment">@example</span></div><div class="line">    <span class="keyword">*</span> var uploader = new Uploader({button:button,queue:queue,serverConfig:{action:'test.php'}})</div><div class="line">    <span class="keyword">*</span>/</div></pre></td></tr></table></figure>
+
+<p>这里我抠一段代码</p>
+<p><strong>耗子 20:42:57</strong></p>
+<p>这些@开头的关键字大家有研究没</p>
+<p><strong>刘林 20:44:06</strong></p>
+<p>看过一些</p>
+<p><strong>刘林 20:44:26</strong></p>
+<p>猜也能猜个大概</p>
+<p><strong>耗子 20:44:51</strong></p>
+<p>嗯<br>刘林师兄说说</p>
+<p><strong>耗子 20:46:27</strong></p>
+<p>@小妹，你们平时要求这么写过注释没</p>
+<p><strong>耗子 20:46:43</strong></p>
+<p><strong>小妹 20:46:44</strong></p>
+<p>没这么要求 但是格式是要这样的</p>
+<p><strong>小妹 20:46:55</strong></p>
+<p>特别写函数的时候</p>
+<p><strong>刘林 20:47:03</strong></p>
+<p>param 是参数吧</p>
+<p><strong>小妹 20:47:04</strong></p>
+<p>参数和返回值等</p>
+<p><strong>黄朋全 20:47:08</strong></p>
+<p>比较常用的关键字是param return exception</p>
+<p><strong>黄朋全 20:47:30</strong></p>
+<p>extends在java里好像是不用的。</p>
+<p><strong>耗子 20:47:46</strong></p>
+<p>dojo的编程风格中把注释直接写在形参后面</p>
+<p><strong>刘林 20:47:56</strong></p>
+<p>requires 是依赖的包？</p>
+<p><strong>黄朋全 20:47:59</strong></p>
+<p>恩。</p>
+<p><strong>耗子 20:48:14</strong></p>
+<p>这段是jsdoc中的语法约定</p>
+<p><strong>黄朋全 20:48:18</strong></p>
+<p>回答的子豪的问题。</p>
+<p><strong>耗子 20:48:53</strong></p>
+<p><a href="http://usejsdoc.org上有说" target="_blank" rel="external">http://usejsdoc.org上有说</a></p>
+<p><strong>耗子 20:49:31</strong></p>
+<p>这段注释一般出现在一个类的开头</p>
+<p><strong>耗子 20:49:37</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@name</span> ：类名</div></pre></td></tr></table></figure>
+
+<p><strong>耗子 20:50:12</strong></p>
+<p>这完全是为了生成文档用的<br>因为它应该就是方法名</p>
+<p><strong>耗子 20:50:24</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@class</span> ：类描述</span></div></pre></td></tr></table></figure>
+
+<p><strong>黄朋全 20:50:42</strong></p>
+<p>恩。</p>
+<p><strong>耗子 20:50:54</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="function"><span class="keyword">constructor</span> ：表明这是一个构造函数，这个在<span class="title">jsdoc</span>中非常重要，生成文档要用</span></div></pre></td></tr></table></figure>
+
+<p><strong>耗子 20:51:18</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">extends</span> ：声明这个类继承的父类</div></pre></td></tr></table></figure>
+
+<p><strong>刘林 20:51:35</strong></p>
+<p>然后</p>
+<p><strong>耗子 20:51:38</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@requires</span> ： 声明依赖关系</div></pre></td></tr></table></figure>
+
+<p><strong>刘林 20:51:37</strong></p>
+<p>？</p>
+<p><strong>刘林 20:51:55</strong></p>
+<p>good</p>
+<p><strong>耗子 20:52:06</strong></p>
+<p>@param ：是参数，这个应该是要求最复杂的一个了</p>
+<p><strong>黄朋全 20:52:20</strong></p>
+<p>为什么？</p>
+<p><strong>耗子 20:52:50</strong></p>
+<p>你应该告诉别人每个参数的意义和类型啊</p>
+<p><strong>黄朋全 20:53:54</strong></p>
+<p>这个不是每个API都应该写的吗</p>
+<p><strong>黄朋全 20:54:04</strong></p>
+<p>要不然别人怎么用你的api</p>
+<p><strong>耗子 20:54:18</strong></p>
+<p>嗯<br>对，所以它一般也是注释中的大头</p>
+<p><strong>黄朋全 20:54:29</strong></p>
+<p>而且这个参数的有效范围也要描述清楚</p>
+<p><strong>牛牛 20:54:32</strong></p>
+<p>强类型的一般没这个问题…</p>
+<p><strong>耗子 20:54:39</strong></p>
+<p>js是个弱类型的语言</p>
+<p><strong>黄朋全 20:54:57</strong></p>
+<p>哦。</p>
+<p><strong>耗子 20:55:58</strong></p>
+<p>如果是需要写很公用的api，一种是在运行时检测<br>然后抛错，但这会降低程序的性能，也使代码量增加</p>
+<p><strong>耗子 20:56:14</strong></p>
+<p>像在jq的源码里就有很多这种保护性的代码</p>
+<p><strong>耗子 20:56:35</strong></p>
+<p>当然另一种哲学就是约定大于配置</p>
+<p><strong>耗子 20:57:32</strong></p>
+<p>在注释中约定好参数的类型，你不应该乱传</p>
+<p><strong>黄朋全 20:57:32</strong></p>
+<p>有个疑问。就是js的解释器有报错机制吗</p>
+<p><strong>黄朋全 20:57:57</strong></p>
+<p>有些错误在js的解释器能不能检查出来</p>
+<p><strong>耗子 20:58:23</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="at_rule">@<span class="keyword">param</span> </span>{<span class="tag">Object</span>} <span class="tag">config</span></div><div class="line"><span class="at_rule">@<span class="keyword">param</span> </span>{<span class="tag">Boolean</span>} <span class="tag">config</span><span class="class">.isAllowUpload</span></div></pre></td></tr></table></figure>
+
+<p>这两句表示param是个对象</p>
+<p><strong>耗子 20:58:48</strong></p>
+<p>这个对象的形参名叫config</p>
+<p><strong>牛牛 20:58:48</strong></p>
+<p>浏览器会出个小三角</p>
+<p><strong>牛牛 20:59:15</strong></p>
+<p>但是不会具体爆出哪里出错吧</p>
+<p><strong>耗子 20:59:16</strong></p>
+<p>然后其中一个成员叫isAllowUpload ，是个布尔值</p>
+<p><strong>黄朋全 20:59:50</strong></p>
+<p>这个布尔值也是Object吧</p>
+<p><strong>耗子 21:00:36</strong></p>
+<p>解释器不一定能报错<br>比如一个函数要比较两个数的大小<br>而你传的是形似数字的字符串，也能比较，但是可能和你的预期不符</p>
+<p><strong>小妹 21:01:12</strong></p>
+<p>他会进行强制类型转换后再比较</p>
+<p><strong>耗子 21:01:20</strong></p>
+<p>不是Object</p>
+<p>是这样的</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">config</span> <span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">isAllowUpload </span>:<span class="value"> true</span></span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>耗子 21:01:41</strong></p>
+<p>是对象的一个成员</p>
+<p><strong>黄朋全 21:01:55</strong></p>
+<p>也就是js的错误检查机制建立的约定俗成的基础上的。而不是强制规则上的。对吗</p>
+<p><strong>耗子 21:02:30</strong></p>
+<p>这是生成的doc，大家可以自己生成一下就会明白这么写的结果了</p>
+<p><strong>牛牛 21:02:31</strong></p>
+<p>基于标准吧</p>
+<p><strong>牛牛 21:02:36</strong></p>
+<p>ECMA</p>
+<p><strong>黄朋全 21:02:40</strong></p>
+<p>包括子豪师兄说的注释的这些约定都是为了规范写法，从而尽可能避免错误的发生。</p>
+<p><strong>耗子 21:03:01</strong></p>
+<p>嗯<br>是的</p>
+<p>约定大于配置嘛</p>
+<p><strong>牛牛 21:03:16</strong></p>
+<p>标准定义的部分行为是可知的<br>其他的就是未定义的 什么样都有可能。。。</p>
+<p><strong>黄朋全 21:03:26</strong></p>
+<p>这个标准也仅仅是约定，而不能形成强制约束。对吗</p>
+<p><strong>牛牛 21:03:54</strong></p>
+<p>嗯</p>
+<p><strong>牛牛 21:03:57</strong></p>
+<p>话说</p>
+<p><strong>牛牛 21:04:08</strong></p>
+<p>版权注释大家会写么</p>
+<p><strong>耗子 21:04:22</strong></p>
+<p>不能强制</p>
+<p>如果你需要做很开放的接口，你可能需要考虑更多的复杂情况</p>
+<p>内部检查，并将错误抛出来是一种方式</p>
+<p><strong>黄朋全 21:04:31</strong></p>
+<p>想java这种强类型语言，在编译期就会强制你按照规定去写，不按规定写就进行不下去。</p>
+<p><strong>牛牛 21:05:01</strong></p>
+<p>另外我发现 androidsdk的源代码 注释比代码还多</p>
+<p><strong>黄朋全 21:05:04</strong></p>
+<p>@Author @version</p>
+<p><strong>牛牛 21:05:11</strong></p>
+<p>copyright</p>
+<p><strong>耗子 21:05:25</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/<span class="keyword">*</span>! jQuery v1.9.1 <span class="string">| (c) 2005, 2012 jQuery Foundation, Inc. | jquery.org/license</span></div></pre></td></tr></table></figure>
+
+<p>这是jq的一段版权注释</p>
+<p><strong>黄朋全 21:05:50</strong></p>
+<p>恩</p>
+<p><strong>耗子 21:05:54</strong></p>
+<p>有个特点<br>注释以<br>/*!或者//!开头</p>
+<p><strong>耗子 21:06:09</strong></p>
+<p>这样压缩工具就不会把这段注释去掉</p>
+<p><strong>黄朋全 21:06:17</strong></p>
+<p>恩，这是脚本语言的特点。</p>
+<p><strong>牛牛 21:06:24</strong></p>
+<p>袄 java没看到这个</p>
+<p><strong>黄朋全 21:06:27</strong></p>
+<p>在编译语言里不是这样。</p>
+<p><strong>耗子 21:06:29</strong></p>
+<p>应该是行规</p>
+<p><strong>耗子 21:06:41</strong></p>
+<p>编译语言里怎么做呢？</p>
+<p><strong>牛牛 21:06:50</strong></p>
+<p>如果是开源的话可能还会标上是哪种license</p>
+<p><strong>黄朋全 21:06:52</strong></p>
+<p>@Author</p>
+<p><strong>黄朋全 21:07:12</strong></p>
+<p>@copyright</p>
+<p><strong>黄朋全 21:07:17</strong></p>
+<p>@version</p>
+<p><strong>黄朋全 21:07:23</strong></p>
+<p>@ time</p>
+<p><strong>耗子 21:07:38</strong></p>
+<p>jq的min版把license放在一个链接中了，为了减少字节 jquery.org/license</p>
+<p><strong>黄朋全 21:07:46</strong></p>
+<p>有专门的注释关键字，在javadoc里</p>
+<p><strong>黄朋全 21:08:16</strong></p>
+<p>这也是脚本语言的特点，考虑到传输的文件大小。</p>
+<p><strong>牛牛 21:08:16</strong></p>
+<p>貌似现在很少看到author的了</p>
+<p><strong>耗子 21:08:21</strong></p>
+<p>嗯</p>
+<p><strong>黄朋全 21:08:32</strong></p>
+<p>一般也会有</p>
+<p><strong>耗子 21:08:38</strong></p>
+<p>乌龟书里不提倡写author</p>
+<p><strong>黄朋全 21:08:54</strong></p>
+<p>修改的话，一般会有modified by **</p>
+<p><strong>耗子 21:09:09</strong></p>
+<p>作者(很帅)觉得这个可以在版本控制软件里看到，不需要写在代码里</p>
+<p><strong>刘林 21:09:12</strong></p>
+<p>怕担责任么？</p>
+<p><strong>牛牛 21:09:14</strong></p>
+<p>对的</p>
+<p><strong>牛牛 21:09:15</strong></p>
+<p>不是</p>
+<p><strong>黄朋全 21:09:19</strong></p>
+<p>以前在银行领域开发的时候经常看到。</p>
+<p><strong>牛牛 21:09:28</strong></p>
+<p>是因为版本控制已经接替这种功能了</p>
+<p><strong>耗子 21:10:01</strong></p>
+<p>乌龟书的作者认为一个团队的代码应该保持相同的风格<br>不需要区分人</p>
+<p><strong>黄朋全 21:10:16</strong></p>
+<p>恩。</p>
+<p><strong>刘林 21:10:17</strong></p>
+<p>有时候我把代码download下来了，但是木有版本信息啊</p>
+<p><strong>刘林 21:10:32</strong></p>
+<p>此时已经脱离版本控制了</p>
+<p><strong>黄朋全 21:10:59</strong></p>
+<p>在开源项目的开发里，这个应该还是比较常用的。</p>
+<p><strong>牛牛 21:11:02</strong></p>
+<p> 介个。。。现在基本下下来 也可以去来源处去查询版本控制</p>
+<p><strong>耗子 21:11:15</strong></p>
+<p>现在开源代码一般都托管在github或者googlecode这样的协同平台上，都有版本控制的</p>
+<p><strong>牛牛 21:11:27</strong></p>
+<p>不会自己去写这种修改日志什么的了</p>
+<p><strong>刘林 21:11:29</strong></p>
+<p>那多麻烦啊，还得找半天</p>
+<p><strong>牛牛 21:11:51</strong></p>
+<p>现在用惯了版本控制 基本上不会在代码里面写修改日志的了</p>
+<p><strong>牛牛 21:11:54</strong></p>
+<p>老早还会写</p>
+<p><strong>黄朋全 21:12:37</strong></p>
+<p>李永刘说的对。我们现在的开发也是，在每次提交的时候，要写清楚修改的哪个bug，做了哪些变更。</p>
+<p><strong>牛牛 21:12:55</strong></p>
+<p>我们现在逐渐在改进的 我们会加上跟踪tag</p>
+<p><strong>牛牛 21:13:08</strong></p>
+<p>BUG #xxx 子豪应该也知道的</p>
+<p><strong>牛牛 21:13:21</strong></p>
+<p>这样需求管理系统能够追踪的到</p>
+<p><strong>耗子 21:13:27</strong></p>
+<p>日志应该写在commit的注释中<br>这样像禅道这样的工具可以跟踪</p>
+<p><strong>牛牛 21:13:32</strong></p>
+<p>需求+BUG管理系统</p>
+<p><strong>牛牛 21:13:33</strong></p>
+<p>嗯</p>
+<p><strong>刘林 21:14:20</strong></p>
+<p>是啊。 也就是说我看代码的时候必须打开版本控制工具才能明白哪里改了</p>
+<p><strong>耗子 21:14:21</strong></p>
+<p>jsdoc中还有一种注释标签</p>
+<p>我不知道 java中有没有</p>
+<p><strong>耗子 21:14:38</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="javadoc">/**</span></div><div class="line"> *<span class="javadoctag"> @name</span> Uploader#success</div><div class="line"> *<span class="javadoctag"> @desc</span>  上传成功后触发</div><div class="line"> *<span class="javadoctag"> @event</span></div><div class="line"> *<span class="javadoctag"> @param</span> {Number} ev.index 上传中的文件在队列中的索引值</div><div class="line"> *<span class="javadoctag"> @param</span> {Object} ev.file 文件数据</div><div class="line"> *<span class="javadoctag"> @param</span> {Object} ev.result 服务器端返回的数据</div><div class="line"> */</div></pre></td></tr></table></figure>
+
+<p><strong>牛牛 21:14:50</strong></p>
+<p>哈哈你的编辑器可以集成版本控制插件</p>
+<p><strong>牛牛 21:14:53</strong></p>
+<p>就很简单的了</p>
+<p><strong>耗子 21:15:01</strong></p>
+<h1 id="success">success</h1>
+<p>表示这是个事件函数</p>
+<p><strong>牛牛 21:15:03</strong></p>
+<p>至少eclipse都是这样的啦</p>
+<p><strong>耗子 21:15:45</strong></p>
+<p>@desc ： 事件描述<br>@event ： 表明这段注释目标为事件。非常重要</p>
+<p><strong>黄朋全 21:16:01</strong></p>
+<p>这个没有。</p>
+<p><strong>黄朋全 21:16:17</strong></p>
+<p>至少我没见过。</p>
+<p><strong>牛牛 21:16:32</strong></p>
+<p>额 说javadoc里面还会看到很多种类的标签</p>
+<p><strong>黄朋全 21:16:56</strong></p>
+<p>恩。不过很多都不怎么用。</p>
+<p><strong>牛牛 21:16:57</strong></p>
+<p>@hide @link</p>
+<p><strong>牛牛 21:17:13</strong></p>
+<p>@see</p>
+<p><strong>黄朋全 21:17:16</strong></p>
+<p>javadoc的东西很多都还不会用</p>
+<p><strong>耗子 21:17:20</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div></pre></td><td class="code"><pre><div class="line">Inline tags</div><div class="line">All about inline tags {<span class="property">@link</span> ...}, {<span class="property">@linkplain</span> ...}, {<span class="property">@linkcode</span> ...}, {<span class="property">@tutorial</span> ...}.</div><div class="line"><span class="property">@abstract</span></div><div class="line">This member must be implemented (<span class="keyword">or</span> overridden) <span class="keyword">by</span> the inheritor.</div><div class="line"><span class="property">@access</span></div><div class="line">Specify the access level <span class="keyword">of</span> <span class="keyword">this</span> member - private, public, <span class="keyword">or</span> protected.</div><div class="line"><span class="property">@alias</span></div><div class="line">Treat a member as <span class="keyword">if</span> it had a different name.</div><div class="line"><span class="property">@augments</span></div><div class="line">This object adds onto a parent object.</div><div class="line"><span class="property">@author</span></div><div class="line">Identify the author <span class="keyword">of</span> an item.</div><div class="line"><span class="property">@borrows</span></div><div class="line">This object uses something from another object.</div><div class="line"><span class="property">@callback</span></div><div class="line">Document a callback <span class="reserved">function</span>.</div><div class="line"><span class="property">@classdesc</span></div><div class="line">Use the following text to describe the entire <span class="class"><span class="keyword">class</span>.</span></div><div class="line"><span class="property">@constant</span></div><div class="line">Document an object as a constant.</div><div class="line"><span class="property">@constructor</span></div><div class="line">This <span class="reserved">function</span> <span class="keyword">is</span> intended to be called <span class="reserved">with</span> the <span class="string">"new"</span> keyword.</div><div class="line"><span class="property">@constructs</span></div><div class="line">This <span class="reserved">function</span> member will be the constructor <span class="keyword">for</span> the previous <span class="class"><span class="keyword">class</span>.</span></div><div class="line"><span class="property">@copyright</span></div><div class="line">Document some copyright information.</div><div class="line"><span class="property">@default</span></div><div class="line">Document the <span class="reserved">default</span> value.</div><div class="line"><span class="property">@deprecated</span></div><div class="line">Document that <span class="keyword">this</span> <span class="keyword">is</span> <span class="literal">no</span> longer the preferred way.</div><div class="line"><span class="property">@desc</span></div><div class="line">Describe a symbol.</div><div class="line"><span class="property">@enum</span></div><div class="line">Document a collection <span class="keyword">of</span> related properties.</div><div class="line"><span class="property">@event</span></div><div class="line">Document an event.</div><div class="line"><span class="property">@example</span></div><div class="line">Provide an example <span class="keyword">of</span> how to use a documented item.</div><div class="line"><span class="property">@exports</span></div><div class="line">Identify the member that <span class="keyword">is</span> exported <span class="keyword">by</span> a JavaScript <span class="built_in">module</span>.</div><div class="line"><span class="property">@external</span></div><div class="line">Document an external <span class="class"><span class="keyword">class</span>/<span class="title">namespace</span>/<span class="title">module</span>.</span></div><div class="line"><span class="property">@file</span></div><div class="line">Describe a file.</div><div class="line"><span class="property">@fires</span></div><div class="line">Describe the events <span class="keyword">this</span> method may fire.</div><div class="line"><span class="property">@global</span></div><div class="line">Document a <span class="built_in">global</span> object.</div><div class="line"><span class="property">@ignore</span></div><div class="line">[todo] Remove <span class="keyword">this</span> from the final output.</div><div class="line"><span class="property">@inner</span></div><div class="line">Document an inner object.</div><div class="line"><span class="property">@instance</span></div><div class="line">Document an instance member.</div><div class="line"><span class="property">@kind</span></div><div class="line">What kind <span class="keyword">of</span> symbol <span class="keyword">is</span> <span class="keyword">this</span>?</div><div class="line"><span class="property">@lends</span></div><div class="line">Document properties <span class="literal">on</span> an object literal as <span class="keyword">if</span> they belonged to a symbol <span class="reserved">with</span> a given name.</div><div class="line"><span class="property">@license</span></div><div class="line">[todo] Document the software license that applies to <span class="keyword">this</span> code.</div><div class="line"><span class="property">@link</span></div><div class="line">Inline tag - create a link.</div><div class="line"><span class="property">@member</span></div><div class="line">Document a member.</div><div class="line"><span class="property">@memberof</span></div><div class="line">This symbol belongs to a parent symbol.</div><div class="line"><span class="property">@method</span></div><div class="line">Describe a method <span class="keyword">or</span> <span class="reserved">function</span>.</div><div class="line"><span class="property">@mixes</span></div><div class="line">This object mixes <span class="keyword">in</span> all the members from another object.</div><div class="line"><span class="property">@mixin</span></div><div class="line">Document a mixin object.</div><div class="line"><span class="property">@module</span></div><div class="line">Document a JavaScript <span class="built_in">module</span>.</div><div class="line"><span class="property">@name</span></div><div class="line">Document the name <span class="keyword">of</span> an object.</div><div class="line"><span class="property">@namespace</span></div><div class="line">Document a namespace object.</div><div class="line"><span class="property">@param</span></div><div class="line">Document the parameter to a <span class="reserved">function</span>.</div><div class="line"><span class="property">@private</span></div><div class="line">This symbol <span class="keyword">is</span> meant to be private.</div><div class="line"><span class="property">@property</span></div><div class="line">Document a property <span class="keyword">of</span> an object.</div><div class="line"><span class="property">@protected</span></div><div class="line">This member <span class="keyword">is</span> meant to be protected.</div><div class="line"><span class="property">@public</span></div><div class="line">This symbol <span class="keyword">is</span> meant to be public.</div><div class="line"><span class="property">@readonly</span></div><div class="line">This symbol <span class="keyword">is</span> meant to be read-only.</div><div class="line"><span class="property">@requires</span></div><div class="line">This file requires a JavaScript <span class="built_in">module</span>.</div><div class="line"><span class="property">@returns</span></div><div class="line">Document the <span class="keyword">return</span> value <span class="keyword">of</span> a <span class="reserved">function</span>.</div><div class="line"><span class="property">@see</span></div><div class="line">Refer to some other documentation <span class="keyword">for</span> more information.</div><div class="line"><span class="property">@since</span></div><div class="line">When was <span class="keyword">this</span> feature added?</div><div class="line"><span class="property">@static</span></div><div class="line">Document a static member.</div><div class="line"><span class="property">@summary</span></div><div class="line">A shorter version <span class="keyword">of</span> the full description.</div><div class="line"><span class="property">@this</span></div><div class="line">What does the <span class="string">'this'</span> keyword refer to here?</div><div class="line"><span class="property">@throws</span></div><div class="line">Describe what errors could be thrown.</div><div class="line"><span class="property">@todo</span></div><div class="line">Document tasks to be completed.</div><div class="line"><span class="property">@tutorial</span></div><div class="line">Insert a link to an included tutorial file.</div><div class="line"><span class="property">@type</span></div><div class="line">Document the type <span class="keyword">of</span> an object.</div><div class="line"><span class="property">@typedef</span></div><div class="line">Document a custom type.</div><div class="line"><span class="property">@variation</span></div><div class="line">Distinguish different objects <span class="reserved">with</span> the same name.</div><div class="line"><span class="property">@version</span></div><div class="line">Documents the version number <span class="keyword">of</span> an item.</div></pre></td></tr></table></figure>
+
+<p><strong>耗子 21:17:47</strong></p>
+<p> 刷屏了</p>
+<p><strong>牛牛 21:17:49</strong></p>
+<p>然后还有 javadoc注释里面可以使用html标签</p>
+<p><strong>牛牛 21:17:52</strong></p>
+<p>比如</p><p></p>
+<p><strong>黄朋全 21:18:02</strong></p>
+<p>别刷屏</p>
+<p><strong>黄朋全 21:18:08</strong></p>
+<p>看起来费劲。</p>
+<p><strong>耗子 21:18:19</strong></p>
+<p>@牛牛说下这个html标签是怎么用的</p>
+<p><strong>牛牛 21:18:27</strong></p>
+<p>我也不清楚啊</p>
+<p><strong>牛牛 21:18:29</strong></p>
+<p>我只是看到</p>
+<p><strong>黄朋全 21:18:31</strong></p>
+<p>我浏览一下，java里这些都是写到代码里的。</p>
+<p><strong>牛牛 21:18:34</strong></p>
+<p></p><p>其他的没看到</p>
+<p><strong>黄朋全 21:18:40</strong></p>
+<p>javadoc能够解析html</p>
+<p><strong>黄朋全 21:19:09</strong></p>
+<p>所以写javadoc的时候可以用html的格式去写。</p>
+<p><strong>耗子 21:19:53</strong></p>
+<p>哦</p>
+<p><strong>黄朋全 21:20:13</strong></p>
+<p>这样输出的javadoc就有样式。</p>
+<p><strong>牛牛 21:20:24</strong></p>
+<p> 刚才一下刷了好多tag啊</p>
+<p><strong>耗子 21:20:51</strong></p>
+<p>嗯<br>刚才说到了注释的一些写法<br>主要是为了生成文档</p>
+<p><strong>黄朋全 21:20:57</strong></p>
+<p>不只是没有区别的文字。加粗，标题，斜体，连接都可以写。</p>
+<p><strong>牛牛 21:20:58</strong></p>
+<p>在注释里面除了para 最多看到的就是link</p>
+<p><strong>牛牛 21:21:12</strong></p>
+<p>我们写的注释 几乎没有link</p>
+<p><strong>耗子 21:21:17</strong></p>
+<p>link一般怎么用呢</p>
+<p><strong>黄朋全 21:21:29</strong></p>
+<p>用html格式写</p>
+<p><strong>黄朋全 21:21:46</strong></p>
+<p>html怎么写，输出的文档就带着。</p>
+<p><strong>牛牛 21:22:04</strong></p>
+<p>就是比如可能用到某个类里面的常数 或调用到某个方法 它会列出来</p>
+<p><strong>牛牛 21:22:12</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> /**</div><div class="line">     * Returns a string representation <span class="keyword">of</span> <span class="keyword">this</span> BluetoothDevice.</div><div class="line">     * &lt;p&gt;Currently <span class="keyword">this</span> <span class="keyword">is</span> the Bluetooth hardware address, <span class="keyword">for</span> example</div><div class="line"></div><div class="line"></div><div class="line">**     * <span class="string">"00:11:22**</span></div><div class="line"></div><div class="line">:AA:BB:CC". However, you should always use {<span class="property">@link</span> <span class="comment">#getAddress}</span></div><div class="line">     * <span class="keyword">if</span> you explicitly <span class="built_in">require</span> the Bluetooth hardware address <span class="keyword">in</span> <span class="reserved">case</span> the</div><div class="line">     * {<span class="property">@link</span> <span class="comment">#toString} representation changes in the future.</span></div><div class="line">     * <span class="property">@return</span> string representation <span class="keyword">of</span> <span class="keyword">this</span> BluetoothDevice</div><div class="line">     */</div></pre></td></tr></table></figure>
+
+<p><strong>牛牛 21:22:25</strong></p>
+<p>。。。不小心刷屏了</p>
+<p><strong>黄朋全 21:22:40</strong></p>
+<p>你这不是刷屏</p>
+<p><strong>牛牛 21:22:40</strong></p>
+<p>可以看到它里面有两个link的方法</p>
+<p><strong>耗子 21:22:46</strong></p>
+<p>这会生成一个带换行的文档块么</p>
+<p><strong>黄朋全 21:22:54</strong></p>
+<p>会啊</p>
+<p><strong>黄朋全 21:23:24</strong></p>
+<p>javadoc是很强大的注释提取工具。</p>
+<p><strong>耗子 21:23:32</strong></p>
+<p>嗯</p>
+<p><strong>牛牛 21:23:56</strong></p>
+<p><strong>牛牛 21:24:03</strong></p>
+<p>展示的时候就会变成这这样</p>
+<p><strong>牛牛 21:24:13</strong></p>
+<p>see 关键字在最下面</p>
+<p><strong>耗子 21:24:27</strong></p>
+<p>哦</p>
+<p><strong>黄朋全 21:25:01</strong></p>
+<p>子豪师兄是不是受挫了？哈哈</p>
+<p><strong>耗子 21:25:07</strong></p>
+<p>可能时间不够说第三章了<br>哈哈</p>
+<p><strong>黄朋全 21:25:16</strong></p>
+<p>别跟强类型语言比。</p>
+<p><strong>黄朋全 21:25:47</strong></p>
+<p>这个说完了吗</p>
+<p><strong>耗子 21:26:04</strong></p>
+<p>嗯<br>本来就是和大家多种语言进行比较，好知己知彼</p>
+<p><strong>耗子 21:26:33</strong></p>
+<p>嗯，一些注意的事项乌龟书上有提</p>
+<p><strong>耗子 21:27:07</strong></p>
+<p>注释完全是个约定<br>淘宝的开源项目中并不提倡doc风格的注释</p>
+<p><strong>耗子 21:27:33</strong></p>
+<p>觉得代码应该能自解释才是好代码</p>
+<p><strong>黄朋全 21:27:33</strong></p>
+<p>哦。这个我不是很清楚</p>
+<p><strong>黄朋全 21:27:43</strong></p>
+<p>恩，这个是关键。</p>
+<p><strong>耗子 21:27:51</strong></p>
+<p>只在关键的逻辑地方适当地加一些注释</p>
+<p><strong>牛牛 21:27:53</strong></p>
+<p>自解释是很好 但是也有问题的 因为所谓自解释 只是自认为的自解释</p>
+<p><strong>黄朋全 21:27:55</strong></p>
+<p>程序员都很烦补注释的。</p>
+<p><strong>黄朋全 21:28:09</strong></p>
+<p>这个需要基本功。</p>
+<p><strong>黄朋全 21:28:27</strong></p>
+<p>初级程序员还是老老实实写注释的好。</p>
+<p><strong>牛牛 21:28:27</strong></p>
+<p>如果 写代码的人 读代码的人 都是比较高水平的</p>
+<p><strong>牛牛 21:28:30</strong></p>
+<p>就没有问题了</p>
+<p><strong>牛牛 21:29:01</strong></p>
+<p>要是代码写的就不规范 还没注释 就不行咯</p>
+<p><strong>黄朋全 21:29:13</strong></p>
+<p>而且写代码不光是要实现功能，还要时时刻刻考虑要给别人看。</p>
+<p><strong>耗子 21:29:14</strong></p>
+<p> 其实这本书中很多的建议都是为了让代码能够自解释</p>
+<p>如变量的命名就是为了能够自解释</p>
+<p><strong>黄朋全 21:29:34</strong></p>
+<p>耗子师兄把字体调大一些吧。</p>
+<p><strong>耗子 21:29:47</strong></p>
+<p> 注释就是给人看的<br>机器直接都无视了</p>
+<p><strong>耗子 21:30:23</strong></p>
+<p>第三章咱快速过一下吧</p>
+<p>本来也没几页</p>
+<p><strong>黄朋全 21:30:27</strong></p>
+<p>恩。</p>
+<p><strong>耗子 21:30:37</strong></p>
+<p>第三章 《语句和表达式》</p>
+<p><strong>黄朋全 21:30:41</strong></p>
+<p>第三章是语句块和表达式对吧</p>
+<p><strong>黄朋全 21:31:16</strong></p>
+<p>try…catch…finally ，js里也有这东西？？</p>
+<p><strong>耗子 21:31:21</strong></p>
+<p>主要几点<br>大家都应该能明白<br>1、if的表达式应该包在{}括号里</p>
+<p><strong>耗子 21:32:12</strong></p>
+<p>2、条件中不应该赋值</p>
+<p><strong>耗子 21:32:36</strong></p>
+<p>3、花括号的开头写在行末还不是行首</p>
+<p><strong>黄朋全 21:33:11</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Bad, though technically valid JavaScript</span></div><div class="line"><span class="keyword">if</span> (<span class="keyword">condition</span>) { doSomething(); }</div></pre></td></tr></table></figure>
+
+<p><strong>耗子 21:33:23</strong></p>
+<p>4、switch 这个比较有争议，<br>作者是认为可以case穿透的</p>
+<p><strong>黄朋全 21:33:52</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Good</span></div><div class="line"><span class="keyword">if</span> (<span class="keyword">condition</span>) {</div><div class="line">    doSomething();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>耗子 21:34:15</strong></p>
+<p>default也是可以省略的，但如果不写break或者default应该用注释说明</p>
+<p><strong>黄朋全 21:34:36</strong></p>
+<p>js里提倡switch语句吗</p>
+<p><strong>耗子 21:34:59</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (condition) { <span class="keyword">do</span>Something(); }</div></pre></td></tr></table></figure>
+
+<p>其实对于这种单语句<br>我更喜欢</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">condition && <span class="keyword">do</span>Something();</div></pre></td></tr></table></figure>
+
+<p><strong>耗子 21:35:20</strong></p>
+<p>不是很提倡</p>
+<p>java中提倡么</p>
+<p><strong>耗子 21:35:39</strong></p>
+<p>switch天生有不少缺陷</p>
+<p><strong>黄朋全 21:35:51</strong></p>
+<p>java里尽量少用，因为switch更像一种过程语言的思想，不是对象语言的思想</p>
+<p><strong>耗子 21:36:07</strong></p>
+<p>比如条件从枚举变成比较，整个代码都得重构了</p>
+<p><strong>牛牛 21:36:08</strong></p>
+<p>有时候还是会用 哈哈</p>
+<p><strong>黄朋全 21:36:38</strong></p>
+<p>用的少。</p>
+<p><strong>耗子 21:36:55</strong></p>
+<p>5、js中不提倡with</p>
+<p><strong>黄朋全 21:37:04</strong></p>
+<p>在java设计模式里面，有好几种就能够避免使用switch。</p>
+<p><strong>耗子 21:37:07</strong></p>
+<p>这个在严格模式中已经被k掉了</p>
+<p><strong>刘林 21:37:10</strong></p>
+<p>with 是什么？</p>
+<p><strong>耗子 21:37:26</strong></p>
+<p>不知道更好，哈哈</p>
+<p><strong>牛牛 21:37:45</strong></p>
+<p>嗯 我也不知道这种语句</p>
+<p><strong>黄朋全 21:37:55</strong></p>
+<p>表示不知道</p>
+<p><strong>耗子 21:39:02</strong></p>
+<p>6、for循环中的一般用i,j,k作索引<br>但是要注意js的作用域问题，在语句块之外这些值是可以被访问到的</p>
+<p><strong>牛牛 21:39:30</strong></p>
+<p>偶现在循环也很少用ijk</p>
+<p><strong>牛牛 21:39:32</strong></p>
+<p>的</p>
+<p><strong>耗子 21:39:57</strong></p>
+<p>7、数组的循环用for，对象用for in</p>
+<p><strong>耗子 21:40:15</strong></p>
+<p>ecma5中有了forEach，和php类似</p>
+<p><strong>黄朋全 21:40:18</strong></p>
+<p>先考虑foreach，然后在for</p>
+<p><strong>刘林 21:40:34</strong></p>
+<p>有效率差别么</p>
+<p><strong>耗子 21:40:44</strong></p>
+<p>forEach不是所有的浏览器都支持</p>
+<p><strong>黄朋全 21:40:50</strong></p>
+<p>至于ijk，在for语句还是常用的。</p>
+<p><strong>牛牛 21:40:55</strong></p>
+<p>额 是因为for 还要再取长度</p>
+<p><strong>黄朋全 21:41:03</strong></p>
+<p>java里foreach的效率更高。</p>
+<p><strong>黄朋全 21:41:35</strong></p>
+<p>如果对序号有要求的话只能用for余洁</p>
+<p><strong>牛牛 21:41:37</strong></p>
+<p>可能是因为直接的for(;;)这种现在用的少了</p>
+<p><strong>黄朋全 21:41:37</strong></p>
+<p>语句。</p>
+<p><strong>耗子 21:41:44</strong></p>
+<p>foreach可以通过扩展原型链的方式让老浏览器支持</p>
+<p><strong>刘林 21:41:46</strong></p>
+<p>c++ 只有for，不用纠结</p>
+<p><strong>耗子 21:42:36</strong></p>
+<p>for in循环在js中有个问题，就是会访问从原型链中继承来的属性</p>
+<p><strong>黄朋全 21:43:26</strong></p>
+<p>这个有什么区别</p>
+<p><strong>黄朋全 21:43:34</strong></p>
+<p>具体解释一下？</p>
+<p><strong>耗子 21:44:16</strong></p>
+<p>乌龟书中建议for in时一定要判断</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>( var i <span class="keyword">in</span> o){</div><div class="line">    <span class="keyword">if</span>(o.hasOwnProperty(i)){</div><div class="line">       <span class="keyword">...</span></div><div class="line">   }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>黄朋全 21:45:16</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="built_in">Object</span> a: map) {</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>黄朋全 21:45:42</strong></p>
+<p>这时java的写法。和for语句的区别很小。</p>
+<p><strong>黄朋全 21:46:08</strong></p>
+<p>不明白js里for in语句和for语句有什么大的区别</p>
+<p><strong>耗子 21:46:13</strong></p>
+<p>这相当于for in吧</p>
+<p><strong>黄朋全 21:46:33</strong></p>
+<p>他们得到的对象都是一样的。</p>
+<p><strong>黄朋全 21:47:07</strong></p>
+<p>在真正实现的时候，很好再去访问集合对象。</p>
+<p><strong>黄朋全 21:47:09</strong></p>
+<p>很少</p>
+<p><strong>耗子 21:47:52</strong></p>
+<p>这个<br>呵呵<br>说来话长</p>
+<p>反正记住一点</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[]数组循环用<span class="keyword">for</span> (var i=<span class="number">0</span>, l = arr.length, i &lt; l; ++i)<span class="keyword">...</span></div><div class="line"></div><div class="line">{}对象 用 <span class="keyword">for</span>(var i <span class="keyword">in</span> obj) {</div><div class="line">    <span class="keyword">if</span> (obj.hasOwnProperty(i)) {</div><div class="line">       。。。</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>黄朋全 21:47:55</strong></p>
+<p>但是子豪给的例子为什么还会在循环里出现集合对象</p>
+<p><strong>黄朋全 21:48:37</strong></p>
+<p>在java1.5以后，数组和集合都可以用foreach语句</p>
+<p><strong>黄朋全 21:48:59</strong></p>
+<p>而且foreach语句的性能还要高一些。</p>
+<p><strong>黄朋全 21:49:37</strong></p>
+<p>还有对象用for in语句，这个对象如果不是集合对象可以吗？</p>
+<p><strong>黄朋全 21:49:42</strong></p>
+<p>java是不可以的。</p>
+<p><strong>黄朋全 21:50:36</strong></p>
+<p>java的foreach语句没有遍历对象的各个成员域的功能。</p>
+<p><strong>耗子 21:50:40</strong></p>
+<p>不是集合对象也可以用for in<br>但意义不大</p>
+<p><strong>黄朋全 21:50:59</strong></p>
+<p>js的for in语句可以遍历对象的成员域？</p>
+<p><strong>耗子 21:51:01</strong></p>
+<p>因为数组的下标都是整型</p>
+<p><strong>耗子 21:51:45</strong></p>
+<p>会遍历对象的原型链</p>
+<p><strong>黄朋全 21:52:22</strong></p>
+<p>把对象作为一个树结构或者网结构进行遍历吗？</p>
+<p><strong>耗子 21:52:30</strong></p>
+<p>8、js里没有goto</p>
+<p><strong>黄朋全 21:52:49</strong></p>
+<p>goto就算了，这个是恶魔</p>
+<p><strong>耗子 21:53:01</strong></p>
+<p><a href="http://bonsaiden.github.io/JavaScript-Garden/zh/" target="_blank" rel="external">http://bonsaiden.github.io/JavaScript-Garden/zh/</a></p>
+<p>这里有很长的一段讲for和for in</p>
+<p><strong>牛牛 21:53:21</strong></p>
+<p>在裸奔的语言里面不得已使用goto的</p>
+<p><strong>耗子 21:53:45</strong></p>
+<p>呵呵<br>今天不展开讲了，得对js的原型继承弄明白了才能很好地理解</p>
+<p><strong>耗子 21:54:18</strong></p>
+<p>时间不早了</p>
+<p><strong>黄朋全 21:54:32</strong></p>
+<p>goto在当时写汇编语言的时候用来实现循环。</p>
+<p><strong>黄朋全 21:54:53</strong></p>
+<p>好像是jump。</p>
+<p><strong>耗子 21:55:35</strong></p>
+<p>由于时间的关系我们今晚就讨论到这里吧 ：)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/02-注释 && 语句和表达式/" data-id="13ffzczbuho0toou" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/nodejs中的跨域问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          解决NodeJS+Express模块的跨域访问控制问题：Access-Control-Allow-Origin
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/01-基本的格式化/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【共学】《编写可维护的javascript》01-基本的格式化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="文章在原站点中的ID" data-title="文章标题" data-url="文章网址"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"haozide"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+
+</section>
+            
+              <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/canvas/" style="font-size: NaNpx;">canvas</a><a href="/tags/other/" style="font-size: NaNpx;">other</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+          </li>
+        
+          <li>
+            <a href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+          </li>
+        
+          <li>
+            <a href="/post/404状态码的坑/">404状态码的坑</a>
+          </li>
+        
+          <li>
+            <a href="/post/use-git-in-local/">use git in local</a>
+          </li>
+        
+          <li>
+            <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+            
+          </div>
+          <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 耗子<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+</nav>
+        <script src="http://s4.qhimg.com/static/74e86b3d770b4acd.js"></script>
+
+
+
+
+
+
+
+<s style="display:none"><script src="http://s19.cnzz.com/stat.php?id=5459156&web_id=5459156"></script></s>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41952285-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+      </div>
+    </body>
+    </html>
+

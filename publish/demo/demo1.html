@@ -1,0 +1,63 @@
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>暴力测试</title>
+</head>
+<body>
+    <button onclick="fill()">fill</button>
+    <button onclick="continueFill()">continueFill</button>
+    <button onclick="removeItem()">removeItem</button>
+    <button onclick="clearAll()">clearAll</button>
+
+    <input type="checkbox">
+    <script>
+        function fill () {
+            var startTime = Date.now();
+            console.time('fill');
+            for(var i = 0; ; ++i){
+                try{
+                    localStorage.setItem(i, '');
+                } catch(e){
+                    alert('共耗时' + (Date.now() - startTime) + 'ms');
+                    alert('fill 共存了' + i +'个key');
+                    console.log('fill', e);
+                    console.log('共存了' + i +'个key');
+                    break;
+                }
+            }
+            console.timeEnd('fill');
+        }
+
+        function continueFill() {
+            var startTime = Date.now();
+            console.time('continueFill');
+            try{
+                localStorage.setItem('more', 'more text');
+            } catch(e){
+                alert('continueFill 共耗时' + (Date.now() - startTime) + 'ms');
+                alert(e);
+                console.log('continueFill', e);
+            }
+            console.timeEnd('continueFill');
+        }
+        function clearAll() {
+            var startTime = Date.now();
+            console.time('clearAll');
+            try{
+                localStorage.clear();
+            }catch(e){};
+            alert('clearAll 共耗时' + (Date.now() - startTime) + 'ms');
+            console.timeEnd('clearAll');
+        }
+
+        function removeItem() {
+            var startTime = Date.now();
+            console.time('removeItem');
+            localStorage.removeItem('99');
+            alert('removeItem 共耗时' + (Date.now() - startTime) + 'ms');
+            console.timeEnd('removeItem');
+        }
+    </script>
+</body>
+</html>

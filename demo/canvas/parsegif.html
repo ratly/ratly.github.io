@@ -1,0 +1,80 @@
+
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .wrap {
+            display: -webkit-box;
+            -flex-flow:column;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="pic">
+            <img id="img" src="/demo/pic.jpg">
+        </div>
+        <canvas id="canvas" style="border:1px solid #ccc;"></canvas>
+
+        <button data-filter="grey">灰</button>
+        <button>灰</button>
+        <button>灰</button>
+    </div>
+<script>
+    function $(id) {
+        return document.getElementById(id)
+    }
+
+    function getImgData(img, callback) {
+        var canvas = document.createElement('canvas'),
+            ctx = canvas.getContext('2d');
+        img.onload = function () {
+            var imgData;
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            callback(imgData);
+        }
+    }
+
+    function filterImg (imgData, kase, callback) {
+        function iterator(pixels, callback) {
+            for (var i = 0, l = pixels.length; i < l; i += 4) {
+                console.log(pixels)
+                var r = pixels[i],
+                    g = pixels[i + 1],
+                    b = pixels[i + 2];
+                // console.log(r)
+                // console.log(g)
+                // console.log(b)
+                r = g = b  = (r+g+b)/3
+            }
+        }
+        var cases = {
+            red : function () {
+                iterator(imgData.data, function (r, g, b) {
+                    // r = g = b  = (r+g+b)/3;
+                });
+                callback(imgData);
+            }
+        }
+        cases[kase]();
+    }
+
+    getImgData($('img'), function (imgData) {
+        document.addEventListener('click', function(e) {
+            if(e.target.nodeName === 'BUTTON') {
+                filterImg(imgData, 'red', function (filterdata) {
+                    $('canvas').width = filterdata.width;
+                    $('canvas').height = filterdata.height;
+                    console.log(filterdata.data[15])
+                    $('canvas').getContext('2d').putImageData(filterdata, 0 ,0);
+                })
+            }
+        }, false);
+    });
+</script>
+</body>
+</html>

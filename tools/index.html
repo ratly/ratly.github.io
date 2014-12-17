@@ -1,0 +1,26 @@
+
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>datauri</title>
+</head>
+<body>
+    <input type="file" id="files" multiple>
+
+    <script>
+        var oFiles = document.getElementById('files');
+        oFiles.addEventListener('change' ,function (e) {
+            var files = e.target.files;
+            for (var i = 0, l = files.length, o; i < l; ++i) {
+                o = files[i]
+                console.log(o);
+                var reader = new FileReader();
+                reader.onload = (function(){
+
+                })();
+            }
+        }, false)
+    </script>
+</body>
+</html>

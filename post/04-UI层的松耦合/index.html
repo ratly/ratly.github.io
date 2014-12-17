@@ -1,0 +1,569 @@
+ 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>【共学】《编写可维护的javascript》04-UI层的松耦合 - 耗子的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+        <link rel="alternative" href="/atom.xml" title="耗子的" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    
+</head>
+    <body>
+      <div id="container">
+        <div id="wrap">
+          <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">耗子的</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://haozi.de"></form>
+      </div>
+    </div>
+  </div>
+</header>
+          <div class="outer">
+            <section id="main"><article id="post-04-UI层的松耦合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/04-UI层的松耦合/" class="article-date">
+  <time datetime="2013-07-04T13:38:33.000Z" itemprop="datePublished">Jul 4 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【共学】《编写可维护的javascript》04-UI层的松耦合
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>耗子</strong></p>
+<p>今晚讲解耦</p>
+<p><strong>张继霞</strong></p>
+<p>弱弱的问一句是第五章吗？</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>张继霞</strong></p>
+<p>好，我临时抱会儿佛脚预习去</p>
+<p><a id="more"></a><br><strong>贤敬</strong></p>
+<p>跟着张师兄，我也看看去。呵呵</p>
+<p><strong>耗子</strong></p>
+<p>你们有谁玩过nodejs没？</p>
+<p><strong>耗子</strong></p>
+<p>今天我们讲的东西基本上不在书本上</p>
+<p><strong>雪花</strong></p>
+<p>。。。我好不容易看看书</p>
+<p><strong>小妹</strong></p>
+<p>估计雪花他们已经预习了</p>
+<p><strong>耗子</strong></p>
+<p>不过也得有个标题吧<br>那还是遵守乌龟书吧，就叫《UI的松耦合》</p>
+<p><strong>耗子</strong></p>
+<p>把它当成一个命题吧</p>
+<p><strong>小妹</strong></p>
+<p>嗯</p>
+<p><strong>耗子</strong></p>
+<p>大家从自己的开发过程经验中谈谈</p>
+<p><strong>耗子</strong></p>
+<p>雪花好像没写过代码</p>
+<p>张继霞还是写过不少的吧</p>
+<p><strong>雪花</strong></p>
+<p>我没开发经验</p>
+<p><strong>张继霞</strong></p>
+<p>写过不多</p>
+<p><strong>耗子</strong></p>
+<p>首先我们弄明白什么叫耦合吧</p>
+<p><strong>耗子</strong></p>
+<p>解耦基本上是所有程序猿一辈子在奋斗的事<br>各种设计模式的目的都是为了解耦</p>
+<p><strong>雪花</strong></p>
+<p>不存在无耦合，无偶不成书啊</p>
+<p><strong>耗子</strong></p>
+<p>哈哈</p>
+<p><strong>贤敬</strong></p>
+<p>耦合就是指两个或两个以上的实体相互依赖于对方的一个量度。（百度百科）</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>耦合的坏处呢？</p>
+<p><strong>雪花</strong></p>
+<p>一处修改，处处修改</p>
+<p><strong>路小平</strong></p>
+<p>维护是噩梦</p>
+<p><strong>雪花</strong></p>
+<p>带来大的工作量</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>对</p>
+<p><strong>贤敬</strong></p>
+<p>所以就提倡松耦合了，对么？</p>
+<p><strong>耗子</strong></p>
+<p>而且不利于leader划分工作，让不同的码农分开发不同的代码</p>
+<p><strong>耗子</strong></p>
+<p>以后我们讲设计模式的时候还是要和解耦打交到</p>
+<p><strong>耗子</strong></p>
+<p>今天主要讨论的是ui层的松耦合</p>
+<p><strong>耗子</strong></p>
+<p>这个大家在切图的时候应该都会遇到过吧？</p>
+<p><strong>耗子</strong></p>
+<p>你们平时如果切图的话<br>会是一个什么流程呢</p>
+<p><strong>张继霞</strong></p>
+<p>恩，经常遇到</p>
+<p><strong>张继霞</strong></p>
+<p>师父文集就犯了这个错误</p>
+<p><strong>张继霞</strong></p>
+<p>在css中用了js表达式</p>
+<p><strong>耗子</strong></p>
+<p>是按区块去切</p>
+<p>还是照着设计图一行行地码</p>
+<p><strong>龙泉寺 - 小白</strong></p>
+<p>先看设计稿的布局。然后分成几个大块，也就是大的div。然后再具体到细节</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>css里写表达式是非常不好的作风</p>
+<p><strong>龙泉寺 - 小白</strong></p>
+<p>精确到设计稿的1px</p>
+<p><strong>耗子</strong></p>
+<p>除了为了ie6的dirty hack<br>我们没有理由再用到它</p>
+<p><strong>张继霞</strong></p>
+<p>按区块</p>
+<p><strong>龙泉寺 - 小白</strong></p>
+<p>如果是项目页面 考虑到哪些是公用的样式。哪些是单独的。然后CSS文件做个区分</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>龙泉寺 - 小白</strong></p>
+<p>兼容的话。我工作这边 基本要兼容包括IE6的十个浏览器吧。。</p>
+<p><strong>张继霞</strong></p>
+<p>10个浏览器？</p>
+<p><strong>路小平</strong></p>
+<p>我们是用less封装了一些公用方法</p>
+<p><strong>耗子</strong></p>
+<p>css中有些是和布局相关的<br>比如两栏式布局，这要定义一些css属性</p>
+<p>它们你们是写在模块的id上呢<br>还是独立地写个layout呢</p>
+<p><strong>耗子</strong></p>
+<p>小路说的用less写一些共公的基础方法<br>这能减少一些犯错误的机会<br>但还不是解耦</p>
+<p><strong>路小平</strong></p>
+<p>后者，布局和功能分开</p>
+<p><strong>龙泉寺 - 小白</strong></p>
+<p>独立的一个layout 或者Global</p>
+<p><strong>张继霞</strong></p>
+<p>两种方式都干过，独立的layout更合适</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>一般layout怎么写呢</p>
+<p><strong>耗子</strong></p>
+<p>layout里的功能模块又怎么写</p>
+<p><strong>龙泉寺 - 小白</strong></p>
+<p>解耦 是什么</p>
+<p><strong>耗子</strong></p>
+<p>css命名有什么样的习惯或者规范呢？</p>
+<p><strong>龙泉寺 - 小白</strong></p>
+<p>每个前端都有自己的一个命名习惯。但如果一起开发一个项目 或者公司的话。会有自己的一套命名规则</p>
+<p><strong>耗子</strong></p>
+<p>每个前端都有，而不是公司遵守一套么</p>
+<p><strong>耗子</strong></p>
+<p>那好<br>我就说下我平时写css的习惯吧</p>
+<p><strong>龙泉寺 - 小白</strong></p>
+<p>比如 顶部导航。有的人喜欢 NavTop  有的人喜欢nav_top</p>
+<p><strong>耗子</strong></p>
+<p>我会把页面按功能，而不是ui分</p>
+<p><strong>耗子</strong></p>
+<p>比如一个主导航<br>这个我会独立写一个css文件，一段html</p>
+<p><strong>耗子</strong></p>
+<p>它的类名以m-main-nav开头，我不会取名叫navtop</p>
+<p>因为它不一定就会永远呆在top上啊</p>
+<p>否则哪天它不在页面顶部，我会有强迫症的</p>
+<p><strong>小强</strong></p>
+<p>按功能分也会有问题</p>
+<p><strong>耗子</strong></p>
+<p>另一个为什么我会以m-开头呢</p>
+<p>这是我的一个习惯，表示它是一个通用的module</p>
+<p><strong>耗子</strong></p>
+<p>小强可以说说哪些问题，我们一起探讨</p>
+<p><strong>耗子</strong></p>
+<p>这样一个module它可能出现在整个网站的任何地方<br>它本身呈现出来的样子应该是个宽度100%自适应的block元素形式</p>
+<p>它不应该含有float、margin、position等影响周围邻居的不和谐行为</p>
+<p><strong>耗子</strong></p>
+<p>然后再是layout</p>
+<p>layout不涉及具体业务<br>只搭一个脚手架</p>
+<p>然后将自适应的module填进去</p>
+<p>为什么我们在页面布局时喜欢div?</p>
+<p>因为它默认是个没有margin，没有position float的块状盒子</p>
+<p><strong>小强</strong></p>
+<p>模块不外挂定位是一个很好的做法</p>
+<p><strong>张继霞</strong></p>
+<p>layout不涉及具体业务→那宽度、浮动这些放哪呢？</p>
+<p><strong>耗子</strong></p>
+<p>会写一些共公的类<br>如<br>.-clearfix<br>.-fl<br>.-fr<br>.-m-t-5<br>.-m-r-5<br>.-m-r-10</p>
+<p><strong>耗子</strong></p>
+<p>以-开头也是我的一个习惯<br>表示是css框架提供的方法</p>
+<p><strong>耗子</strong></p>
+<p>bootstrap中也定义了一套脚手架</p>
+<p>如 .row<br>.span1<br>.span2<br>….<br>.span12</p>
+<p><strong>张继霞</strong></p>
+<p> 后面的数值有具体的意义吗？</p>
+<p><strong>耗子</strong><br>嗯<br>比如 .m-t-5<br>我用来表示margin-top:5px</p>
+<p><strong>张继霞</strong></p>
+<p>耦合了吧？</p>
+<p><strong>路小平</strong></p>
+<p>这样有问题，哪天不mr5了，还要改html</p>
+<p><strong>小强</strong></p>
+<p>定位的东西用这些公共属性</p>
+<p><strong>耗子</strong></p>
+<p>嗯，但我将耦合的部分都抽出来了，这样与布局相关的东西都在layout里了</p>
+<p><strong>耗子</strong></p>
+<p>而不会出现在module里</p>
+<p><strong>耗子</strong></p>
+<p>如果从两栏变三栏<br>我们要改的就是layout.css<br>和html脚手架</p>
+<p><strong>耗子</strong></p>
+<p>由于里面的module都是自适应宽的<br>所以很容易适应</p>
+<p>可能这种布局对追求极限语义的人来说可能接受不了</p>
+<p>但是在工作过程中我觉得它是最能快速迭代的方式</p>
+<p><strong>耗子</strong></p>
+<p>另外还有一种耦合<br>可能大家没有考虑到，或者拿它没辙</p>
+<p>我们经常会使用一些css spirit技术 将很多小图片拼合成一张大图</p>
+<p><strong>耗子</strong></p>
+<p>而这里面有些小ico<br>随着业务变更不需要了<br>这时候我们不敢删了</p>
+<p>因为删了，别的ico都要重新定位</p>
+<p>还有css</p>
+<p>比如首页某个公告模块领导说不要了</p>
+<p>然后我们就把那块html注释了</p>
+<p>但与之相关的图片和css却根本记不清在哪儿的哪一段</p>
+<p>不敢删或者懒得删</p>
+<p>这也是耦合</p>
+<p><strong>小强</strong></p>
+<p>关于这个我有一个方案</p>
+<p>就是按方格子来放</p>
+<p>这里还附带了一个全局配置sprite定位的东西</p>
+<p><strong>耗子</strong></p>
+<p>方格子也无法解决一个模块下架后把与它相关的图标也下架</p>
+<p><strong>小强</strong></p>
+<p>之前做过一个实践，将所有sprite的图标用一个css单独存放</p>
+<p><strong>小强</strong></p>
+<p>如果项目大的话可以一个sprite放一个css</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p>这是一种方案<br>适合全站通用的ico，<br>bootstrap也有个专门的sprites.less来解决全部的图标</p>
+<p>但这种方法应该被淘汰</p>
+<p><strong>小强</strong></p>
+<p>你要删掉一个图标</p>
+<p>只要收索有没有相关的css样式被引用</p>
+<p>就可以干净的删除了</p>
+<p><strong>路小平</strong></p>
+<p>icon按16<em>16 32</em>32这样的规格存放</p>
+<p><strong>小强</strong></p>
+<p>sprite中留出来地方还可以放新加的图标</p>
+<p><strong>耗子</strong></p>
+<p>其实我想说sprites技术是我们造成前端耦合的一个常见问题</p>
+<p><strong>耗子</strong></p>
+<p>全站搜索，全靠人肉么？</p>
+<p><strong>耗子</strong></p>
+<p>我的原则就是不使用sprites雪碧图技术！</p>
+<p><strong>耗子</strong><br>所有与模块相关的图片都放在模块自己的文件夹里，包括它要用到的小ico</p>
+<p>要删的时候把这个文件夹删了</p>
+<p><strong>小强</strong></p>
+<p>高内聚！</p>
+<p><strong>耗子</strong></p>
+<p>关于怎么在线上环境中合成拼图<br>可以用一些工具去自动化做这种事<br>而不是人去做</p>
+<p><strong>耗子</strong></p>
+<p>好了<br>刚讲到css与html的解耦</p>
+<p>接下来我们聊一聊js与html的解耦吧</p>
+<p>谁来说说呢</p>
+<p><strong>小妹</strong></p>
+<p>我来说说吧</p>
+<p>我一般的基础的做法是 html里面一般不加onclick onchange等的事件</p>
+<p>然后js放到js文件里面</p>
+<p>js代码也不放到html页面上</p>
+<p><strong>耗子</strong></p>
+<p>对<br>这是一方面</p>
+<p>在dom里写onclick这样的属性</p>
+<p>将函数名与事件耦合了</p>
+<p>onclick = xxx<br>xxx必须是一个全局函数或者一个暴露在window下的对象</p>
+<p>并且必须是具名的</p>
+<p><strong>小强</strong></p>
+<p>我也说一点，用css的钩子</p>
+<p><strong>小强</strong></p>
+<p>就是一个class是j-<em>*</em></p>
+<p><strong>耗子</strong></p>
+<p>嗯，小强说下什么是css钩子吧</p>
+<p><strong>路小平</strong></p>
+<p>嗯我们也是</p>
+<p><strong>小强</strong></p>
+<p>然后在一个地方通过选择器去绑定</p>
+<p><strong>耗子</strong></p>
+<p>呵呵<br>这是个还不错的方法,豆瓣很多地方在用</p>
+<p><strong>小强</strong></p>
+<p>其实这和onclick没有本质的区别</p>
+<p><strong>小强</strong></p>
+<p>从解耦的角度来说</p>
+<p><strong>耗子</strong></p>
+<p>不过有个原则<br>j-开头的css不要在上面作用样式</p>
+<p><strong>小强</strong></p>
+<p>嗯</p>
+<p><strong>小强</strong></p>
+<p>还有类似的data-**</p>
+<p><strong>耗子</strong></p>
+<p>样式与行为用不同的class进行标示</p>
+<p><strong>耗子</strong></p>
+<p>我一般用 data-做事件钩子，这更符合规范</p>
+<p><strong>刘林</strong></p>
+<p>讨论得好深了</p>
+<p><strong>耗子</strong></p>
+<p>并且一个dom节点上你是无法保证只有一个classname的<br>你只能使用removeClass addClass这样的jq提供的方式操作其中一个class<br>如果全删了，可能样式就挂了</p>
+<p><strong>小强</strong></p>
+<p>事件的钩子我们用event-**是不是更好一点</p>
+<p><strong>耗子</strong></p>
+<p>data- 是规范的方式</p>
+<p><strong>小强</strong></p>
+<p>data我习惯放数据</p>
+<p><strong>小强</strong></p>
+<p>呵呵，event是我突然想到的。。。</p>
+<p><strong>耗子</strong></p>
+<p>其实这个没有特定的<br>google  的angularjs框架就是用的ng-前缀</p>
+<p><strong>耗子</strong></p>
+<p>不冲突不大众就好，比如用项目或者公司的名字缩写</p>
+<p><strong>耗子</strong></p>
+<p>jq绑定事件大家是不是喜欢</p>
+<p>$(xxx).click(function(){….})</p>
+<p>你们这样用的？</p>
+<p><strong>小妹</strong></p>
+<p>是啊 不存在事件委托的话 是这样绑定的</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>是有这个问题</p>
+<p><strong>耗子</strong></p>
+<p>这在需要动态生成的页面上就不好使了</p>
+<p><strong>耗子</strong></p>
+<p>内联的 onclick反而没有这个问题</p>
+<p><strong>云涛</strong></p>
+<p>耗子 backbone.js 有接触吗</p>
+<p><strong>耗子</strong></p>
+<p>呵呵，是吧？</p>
+<p><strong>小妹</strong></p>
+<p>嗯 是的</p>
+<p><strong>耗子</strong></p>
+<p>但是还是不推荐在dom里写onclick</p>
+<p><strong>小妹</strong></p>
+<p>一般确定没有动态生成div的时候 是习惯直接用。click</p>
+<p><strong>小强</strong></p>
+<p>动态生成的用on</p>
+<p><strong>小妹</strong></p>
+<p>嗯</p>
+<p><strong>小强</strong></p>
+<p>jq1.9已经把live飞废弃了</p>
+<p><strong>小妹</strong></p>
+<p>bind 或者delegate底层都是用on</p>
+<p><strong>耗子</strong></p>
+<p>呵呵</p>
+<p><strong>耗子</strong></p>
+<p>jq的一些方法以后可以专门讨论一下</p>
+<p><strong>小妹</strong></p>
+<p>是不是我有说的不对的地方？</p>
+<p><strong>耗子</strong></p>
+<p>其实对于单页面应用jq的这种方式已经很不方便了</p>
+<p><strong>小强</strong></p>
+<p>哦，有什么好的解决方案</p>
+<p><strong>耗子</strong></p>
+<p>没<br>小妹说得很对</p>
+<p><strong>云涛</strong></p>
+<p>单页面 应用选jquery 作为主框框，估计还是难度较高哦</p>
+<p><strong>耗子</strong></p>
+<p>这个云涛说的backbone.js里有解决方案</p>
+<p><strong>耗子</strong></p>
+<p>jq可以与backbone共用<br>不过已经沦落成dom操作工具了</p>
+<p><strong>云涛</strong></p>
+<p>jquery 的dom 选择工具被独立出来，作为一个项目</p>
+<p><strong>耗子</strong></p>
+<p>总结一下今天的内容吧</p>
+<p>1、不在css里用表达式，除了解决一些ie6的dirty hack<br>2、将布局样式与模块样式分离<br>3、开发中不使用雪碧图，这个交给集成工具<br>3、不在dom中内联script<br>3、呃我不会数数了</p>
+<p><strong>耗子</strong></p>
+<p>今天时间刚刚好<br>我没有拖堂</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/04-UI层的松耦合/" data-id="sej4aha4oagacaxj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/05-避免使用全局变量/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【共学】《编写可维护的javascript》05-避免使用全局变量
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/03-变量、函数和运算符/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【共学】《编写可维护的javascript》03-变量、函数和运算符</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="文章在原站点中的ID" data-title="文章标题" data-url="文章网址"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"haozide"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+
+</section>
+            
+              <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/canvas/" style="font-size: NaNpx;">canvas</a><a href="/tags/other/" style="font-size: NaNpx;">other</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+          </li>
+        
+          <li>
+            <a href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+          </li>
+        
+          <li>
+            <a href="/post/404状态码的坑/">404状态码的坑</a>
+          </li>
+        
+          <li>
+            <a href="/post/use-git-in-local/">use git in local</a>
+          </li>
+        
+          <li>
+            <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+            
+          </div>
+          <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 耗子<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+</nav>
+        <script src="http://s4.qhimg.com/static/74e86b3d770b4acd.js"></script>
+
+
+
+
+
+
+
+<s style="display:none"><script src="http://s19.cnzz.com/stat.php?id=5459156&web_id=5459156"></script></s>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41952285-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+      </div>
+    </body>
+    </html>
+

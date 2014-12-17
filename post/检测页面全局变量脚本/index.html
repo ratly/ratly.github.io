@@ -1,0 +1,233 @@
+ 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>检测页面全局变量脚本 - 耗子的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+        <link rel="alternative" href="/atom.xml" title="耗子的" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    
+</head>
+    <body>
+      <div id="container">
+        <div id="wrap">
+          <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">耗子的</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://haozi.de"></form>
+      </div>
+    </div>
+  </div>
+</header>
+          <div class="outer">
+            <section id="main"><article id="post-检测页面全局变量脚本" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/检测页面全局变量脚本/" class="article-date">
+  <time datetime="2014-10-25T04:40:40.000Z" itemprop="datePublished">Oct 25 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      检测页面全局变量脚本
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上次说到严格模式也不能完全保证不会意外跑出全局变量，所以最好还有一种更方便的检测方法。</p>
+<h2 id="jshint">jshint</h2>
+<h2 id="亡羊补牢，后知后觉">亡羊补牢，后知后觉</h2>
+<p>由于不同的流量器宿主全局方法并不一样，但同一个浏览器的不内window实例一定是一样的，所以我们可以构建一个临时的iframe，里面的window对象是干净无污染的，只要拿topwindow和这个iframeWindow中的变量进行对比，就行。如果是用户不小心抛出去的全局变量，一定是可写可读的，不可能是用Object.Object.defineProperty搞出来的只读的常量。于是便有了以下代码: 可将此链接直接拖到收藏夹栏使用<a href="javascript:eval(decodeURIComponent('(function(e%2Ct%2Cn%2Cr)%7Bn%3Dt.createElement(%22script%22)%2Cr%3Dt.body%2Cn.onload%3Dn.onerror%3Dfunction()%7Br.removeChild(n)%7D%2Cn.setAttribute(%22charset%22%2C%22utf-8%22)%2Cn.src%3D%22http%3A%2F%2Fhaozi.de%2Fdemo%2FcheckGlobalVar%2FcheckGlobalVar.js%3F%3D%22%2B(new%20Date%2F864e5).toFixed()%2Cr.appendChild(n)%7D)(top%2Cdocument)'))" target="_blank" rel="external">检测全局变量</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="list">(<span class="title">function</span><span class="list">(<span class="title">topWindow</span>, document)</span>{</span></div><div class="line">    var iframeWindow<span class="comment">;</span></div><div class="line">    var whiteList = [/<span class="variable">*'jQuery', '$', ...*</span>/]<span class="comment">;</span></div><div class="line">    var ret = []<span class="comment">;</span></div><div class="line">    function checkGlobalVar<span class="list">()</span> {</div><div class="line">        var iframe = document.createElement<span class="list">(<span class="quoted">'iframe</span>')</span>, i, originValue<span class="comment">;</span></div><div class="line">        document.body.appendChild<span class="list">(<span class="title">iframe</span>)</span><span class="comment">;</span></div><div class="line">        iframeWindow = iframe.contentWindow<span class="comment">;</span></div><div class="line">        for<span class="list">(<span class="title">i</span> in topWindow)</span> {</div><div class="line">            if<span class="list">(!<span class="list">(<span class="title">i</span> in iframeWindow)</span> <span class="keyword">&&</span> !~whiteList.indexOf<span class="list">(<span class="title">i</span>)</span>)</span> {</div><div class="line">                originValue = topWindow[i]<span class="comment">;</span></div><div class="line">                topWindow[i] = '耗子么么哒'<span class="comment">; // 写一个不可能是系统预设的值</span></div><div class="line">                if<span class="list">(<span class="title">topWindow</span>[i] === '耗子么么哒')</span> {</div><div class="line">                    iframeWindow.console.info<span class="list">(<span class="title">i</span>)</span><span class="comment">; // 防止重写了topWindow的console</span></div><div class="line">                    ret.push<span class="list">(<span class="title">i</span>)</span><span class="comment">;</span></div><div class="line">                }</div><div class="line">                topWindow[i] = originValue<span class="comment">;</span></div><div class="line">            }</div><div class="line">        }</div><div class="line">        iframeWindow.console.warn<span class="list">('共找到'  + ret.length + '个全局变量<span class="comment">;');</span></span></div><div class="line">        document.body.removeChild<span class="list">(<span class="title">iframe</span>)</span><span class="comment">; // 干完坏事会死灭迹</span></div><div class="line">        iframeWindow = null<span class="comment">;</span></div><div class="line">    }</div><div class="line">    setTimeout<span class="list">(<span class="title">function</span><span class="list">()</span>{</span></div><div class="line">        if<span class="list">(!document.body)</span> {</div><div class="line">            alert<span class="list">('页面还没加载完！')</span><span class="comment">;</span></div><div class="line">            return<span class="comment">;</span></div><div class="line">        }</div><div class="line">        checkGlobalVar<span class="list">()</span><span class="comment">;</span></div><div class="line">    }, <span class="number">1000</span>)</div><div class="line">})<span class="list">(<span class="title">top</span>, document)</span><span class="comment">;</span></div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/检测页面全局变量脚本/" data-id="wza1xb5jlwbagpnm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/post/严格模式下arguments的限制/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">严格模式下arguments的限制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="文章在原站点中的ID" data-title="文章标题" data-url="文章网址"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"haozide"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+
+</section>
+            
+              <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/canvas/" style="font-size: NaNpx;">canvas</a><a href="/tags/other/" style="font-size: NaNpx;">other</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+          </li>
+        
+          <li>
+            <a href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+          </li>
+        
+          <li>
+            <a href="/post/404状态码的坑/">404状态码的坑</a>
+          </li>
+        
+          <li>
+            <a href="/post/use-git-in-local/">use git in local</a>
+          </li>
+        
+          <li>
+            <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+            
+          </div>
+          <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 耗子<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+</nav>
+        <script src="http://s4.qhimg.com/static/74e86b3d770b4acd.js"></script>
+
+
+
+
+
+
+
+<s style="display:none"><script src="http://s19.cnzz.com/stat.php?id=5459156&web_id=5459156"></script></s>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41952285-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+      </div>
+    </body>
+    </html>
+

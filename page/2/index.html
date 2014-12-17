@@ -1,0 +1,458 @@
+ 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>耗子的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+        <link rel="alternative" href="/atom.xml" title="耗子的" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    
+</head>
+    <body>
+      <div id="container">
+        <div id="wrap">
+          <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">耗子的</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://haozi.de"></form>
+      </div>
+    </div>
+  </div>
+</header>
+          <div class="outer">
+            <section id="main">
+  
+    <article id="post-node中实现sleep" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/node中实现sleep/" class="article-date">
+  <time datetime="2013-06-21T10:27:45.000Z" itemprop="datePublished">Jun 21 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/node中实现sleep/">node中实现sleep</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于nodejs中都是异步编程，node中没有类似php的sleep函数，如果想实现同步的hold，可以自己写个函数</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sleep</span><span class="params">(milliSeconds)</span></span>{</div><div class="line">   <span class="keyword">var</span> startTime = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">   <span class="keyword">while</span> (<span class="keyword">new</span> <span class="built_in">Date</span>().getTime() &lt; startTime + milliSeconds);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/node中实现sleep/" data-id="utsdy5bg2op6m3ax" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-nodejs中的跨域问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/nodejs中的跨域问题/" class="article-date">
+  <time datetime="2013-06-20T01:37:52.000Z" itemprop="datePublished">Jun 20 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/nodejs中的跨域问题/">解决NodeJS+Express模块的跨域访问控制问题：Access-Control-Allow-Origin</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨晚在chrome下测试<a href="https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS?redirectlocale=en-US&amp;redirectslug=HTTP_access_control" target="_blank" rel="external">cors</a>，虽然把header中设了Access-COntrol_allow-Origin为*，但仍然报</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">XMLHttpRequest cannot <span class="built_in">load</span> <span class="keyword">http</span>://localhost:<span class="number">3000</span>/auth/xxx/xxx. Origin <span class="keyword">http</span>://localhost is <span class="operator">not</span> allowed <span class="keyword">by</span> Access-Control-Allow-Origin.</div></pre></td></tr></table></figure>
+
+<p>的错。</p>
+<p>折腾了半天，查了好多资料终于搞定:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">var</span> express <span class="subst">=</span> <span class="keyword">require</span>(<span class="string">'express'</span>);</div><div class="line"><span class="built_in">var</span> app <span class="subst">=</span> express();</div><div class="line"><span class="comment">//设置跨域访问</span></div><div class="line">app<span class="built_in">.</span><span class="literal">all</span>(<span class="string">'*'</span>, function(req, res, next) {</div><div class="line">    res<span class="built_in">.</span><span class="keyword">header</span>(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</div><div class="line">    res<span class="built_in">.</span><span class="keyword">header</span>(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"X-Requested-With"</span>);</div><div class="line">    res<span class="built_in">.</span><span class="keyword">header</span>(<span class="string">"Access-Control-Allow-Methods"</span>,<span class="string">"PUT,POST,GET,DELETE,OPTIONS"</span>);</div><div class="line">    res<span class="built_in">.</span><span class="keyword">header</span>(<span class="string">"X-Powered-By"</span>,<span class="string">' 3.2.1'</span>)</div><div class="line">    res<span class="built_in">.</span><span class="keyword">header</span>(<span class="string">"Content-Type"</span>, <span class="string">"application/json;charset=utf-8"</span>);</div><div class="line">    next();</div><div class="line">});</div><div class="line"></div><div class="line">app<span class="built_in">.</span>get(<span class="string">'/auth/:id/:password'</span>, function(req, res) {</div><div class="line">    res<span class="built_in">.</span>send({id:req<span class="built_in">.</span><span class="keyword">params</span><span class="built_in">.</span>id, name: req<span class="built_in">.</span><span class="keyword">params</span><span class="built_in">.</span>password});</div><div class="line">});</div><div class="line"></div><div class="line">app<span class="built_in">.</span>listen(<span class="number">3000</span>);</div><div class="line">console<span class="built_in">.</span><span class="keyword">log</span>(<span class="string">'Listening on port 3000...'</span>);</div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/nodejs中的跨域问题/" data-id="4nusmemy1e1rdg51" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-02-注释 &amp;&amp; 语句和表达式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/02-注释 && 语句和表达式/" class="article-date">
+  <time datetime="2013-06-18T15:53:07.000Z" itemprop="datePublished">Jun 18 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/02-注释 && 语句和表达式/">【共学】《编写可维护的javascript》02-注释 &amp;&amp; 语句和表达式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>耗子 20:21:16</strong></p>
+<p>今天准备和大家共修的是乌龟书的第二章和第三章</p>
+<p><strong>耗子 20:21:34</strong></p>
+<p>第二章主要讲的是注释怎么写</p>
+<p><strong>耗子 20:21:54</strong></p>
+<p>坑爹啊<br>谁不会写注释呢</p>
+
+        
+          <p class="article-more-link">
+            <a href="/post/02-注释 && 语句和表达式/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/02-注释 && 语句和表达式/" data-id="13ffzczbuho0toou" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-01-基本的格式化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/01-基本的格式化/" class="article-date">
+  <time datetime="2013-06-03T15:43:31.000Z" itemprop="datePublished">Jun 3 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/01-基本的格式化/">【共学】《编写可维护的javascript》01-基本的格式化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> 日期: 2013-06-03</p>
+<p><strong>耗子20:07:02</strong></p>
+<p>今天我们想讨论的是js的一些编程风格上的规范</p>
+<p><strong>耗子20:07:48</strong></p>
+<p>@张静师兄<br>您公司项目中有对js的编程风格有要求么 ？</p>
+<p><strong>刘林-PHP开发20:07:48</strong></p>
+<p>具体点呢？</p>
+<p><strong>耗子20:08:18</strong></p>
+<p>大家都可以谈一谈啊，包括别的语言的一些风格</p>
+<p><strong>张静20:08:21</strong></p>
+<p>没有，我们公司基本用的都是很简单的JS。</p>
+<p><strong>张静20:08:29</strong></p>
+<p>比较乱。</p>
+<p><strong>耗子20:09:02</strong></p>
+<p>@刘林师兄 ?<br>
+        
+          <p class="article-more-link">
+            <a href="/post/01-基本的格式化/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/01-基本的格式化/" data-id="v38jqjsl5hqh24m1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-01-基本的格式化 (复件)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/01-基本的格式化 (复件)/" class="article-date">
+  <time datetime="2013-06-03T15:43:31.000Z" itemprop="datePublished">Jun 3 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/01-基本的格式化 (复件)/">【共学】《编写可维护的javascript》01-基本的格式化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> 日期: 2013-06-03</p>
+<p><strong>耗子20:07:02</strong></p>
+<p>今天我们想讨论的是js的一些编程风格上的规范</p>
+<p><strong>耗子20:07:48</strong></p>
+<p>@张静师兄<br>您公司项目中有对js的编程风格有要求么 ？</p>
+<p><strong>刘林-PHP开发20:07:48</strong></p>
+<p>具体点呢？</p>
+<p><strong>耗子20:08:18</strong></p>
+<p>大家都可以谈一谈啊，包括别的语言的一些风格</p>
+<p><strong>张静20:08:21</strong></p>
+<p>没有，我们公司基本用的都是很简单的JS。</p>
+<p><strong>张静20:08:29</strong></p>
+<p>比较乱。</p>
+<p><strong>耗子20:09:02</strong></p>
+<p>@刘林师兄 ?<br>
+        
+          <p class="article-more-link">
+            <a href="/post/01-基本的格式化 (复件)/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/01-基本的格式化 (复件)/" data-id="gu55q3wlvte4zien" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-chrome解除跨域限制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/chrome解除跨域限制/" class="article-date">
+  <time datetime="2012-06-15T07:15:27.000Z" itemprop="datePublished">Jun 15 2012</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/post/chrome解除跨域限制/">chrome解除跨域限制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>启动时加参数</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"...chrome.exe"</span> <span class="comment">--disable-web-security</span></div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/chrome解除跨域限制/" data-id="m6pt7ugz3mofylrf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+  
+</section>
+            
+              <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/canvas/" style="font-size: NaNpx;">canvas</a><a href="/tags/other/" style="font-size: NaNpx;">other</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+          </li>
+        
+          <li>
+            <a href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+          </li>
+        
+          <li>
+            <a href="/post/404状态码的坑/">404状态码的坑</a>
+          </li>
+        
+          <li>
+            <a href="/post/use-git-in-local/">use git in local</a>
+          </li>
+        
+          <li>
+            <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+            
+          </div>
+          <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 耗子<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+</nav>
+        <script src="http://s4.qhimg.com/static/74e86b3d770b4acd.js"></script>
+
+
+
+
+
+
+
+<s style="display:none"><script src="http://s19.cnzz.com/stat.php?id=5459156&web_id=5459156"></script></s>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41952285-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+      </div>
+    </body>
+    </html>
+

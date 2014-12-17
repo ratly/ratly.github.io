@@ -1,0 +1,490 @@
+ 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>【共学】《编写可维护的javascript》05-避免使用全局变量 - 耗子的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+        <link rel="alternative" href="/atom.xml" title="耗子的" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    
+</head>
+    <body>
+      <div id="container">
+        <div id="wrap">
+          <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">耗子的</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://haozi.de"></form>
+      </div>
+    </div>
+  </div>
+</header>
+          <div class="outer">
+            <section id="main"><article id="post-05-避免使用全局变量" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/05-避免使用全局变量/" class="article-date">
+  <time datetime="2013-07-08T17:58:33.000Z" itemprop="datePublished">Jul 9 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【共学】《编写可维护的javascript》05-避免使用全局变量
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>耗子</strong></p>
+<p>今天我们讲的第6章比较简单</p>
+<p>避免使用全局变量</p>
+<p>这个大家有没有  概念呢</p>
+<p><strong>耗子</strong></p>
+<p>@小妹 要不说一下js中产生全局变量的方法吧</p>
+<p><strong>小妹</strong></p>
+<p>好</p>
+<a id="more"></a>
+
+<p><strong>小妹</strong></p>
+<p>例如 不加var的变量声明</p>
+<p>就会变成全局变量</p>
+<p><strong>小白</strong></p>
+<p>var变量=xxx</p>
+<p><strong>小妹</strong></p>
+<p>a=123;</p>
+<p><strong>雪花</strong></p>
+<p>我找不到乌龟书，在张继霞那里，她开会去了。</p>
+<p><strong>耗子</strong></p>
+<p>没事<br>我基本不按书上的套路出牌</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>@小妹 和@小白 分别讲到了js中两种声明变量的方法</p>
+<p><strong>耗子</strong></p>
+<p>a=123;<br>这叫隐式声明<br>var a = 123; 加了一个var，这是显示声明</p>
+<p><strong>耗子</strong></p>
+<p>隐式声明是极度被诟病的一种方式<br>在任何情况下我们都不应该这样声明变量</p>
+<p><strong>耗子</strong></p>
+<p>在php中，变量都是无需声明的<br>与js中的这种情况是有差别的</p>
+<p><strong>耗子</strong></p>
+<p>不过这两种方式都不是声明全局变量的正式方法哦</p>
+<p><strong>雪花</strong></p>
+<p>我认真旁听哈</p>
+<p><strong>耗子</strong></p>
+<p>@小妹 你说正确的应该怎样?</p>
+<p><strong>小妹</strong></p>
+<p>声明全局变量的方法 我一般是用window.xxx=123</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>这种方式在客户端js中没有什么问题</p>
+<p><strong>耗子</strong></p>
+<p>不过如果你开始写node的话<br>在服务器端是没有window宿主对象的</p>
+<p><strong>小妹</strong></p>
+<p>嗯 那样的话怎么定义全局变量呢</p>
+<p><strong>耗子</strong></p>
+<p>node中有global对象</p>
+<p><strong>小妹</strong></p>
+<p>嗯</p>
+<p><strong>耗子</strong></p>
+<p>js中一个特性<br>就是this的指针</p>
+<p><strong>小妹</strong></p>
+<p>global.xxx=123?</p>
+<p><strong>耗子</strong></p>
+<p>this指针一般指向哪儿呢？</p>
+<p><strong>小妹</strong></p>
+<p>嗯 如果在函数里</p>
+<p><strong>小妹</strong></p>
+<p>this指针一般指调用这个函数的对象</p>
+<p><strong>小妹</strong></p>
+<p>如果是全局调用的话 例如: func();this指window</p>
+<p><strong>小妹</strong></p>
+<p>因为就像window.func();</p>
+<p><strong>耗子</strong></p>
+<p>嗯,不过不能这么说，this指到哪和如何调用它有关</p>
+<p><strong>耗子</strong></p>
+<p>this调用比较复杂</p>
+<p><strong>小妹</strong></p>
+<p>en</p>
+<p><strong>耗子</strong></p>
+<p>我先把一种较好的声明全局变量的方法先说一下吧</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="list">(<span class="title">function</span><span class="list">(<span class="title">global</span>)</span>{</span></div><div class="line">    global.xxx = <span class="number">123</span><span class="comment">;</span></div><div class="line">})<span class="list">(<span class="title">this</span>)</span><span class="comment">;</span></div></pre></td></tr></table></figure>
+
+<p>这种方法在严格模式下会有问题，但我会一般不会在全局作用域下开启严格模式</p>
+<p><strong>小妹</strong></p>
+<p>这种在服务器端的js也是可行的是吗？</p>
+<p><strong>小妹</strong></p>
+<p>嗯，这时候的this就是服务端的global吗？</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p>但服务器上其实能实现0全局变量的</p>
+<p><strong>小妹</strong></p>
+<p>哦</p>
+<p><strong>耗子</strong></p>
+<p>之后我们讲一下客户端实现0全局变量的方式</p>
+<p><strong>耗子</strong></p>
+<p>好，我先说下this的五种调用方法吧，这五种方法下this的指针是不一样的</p>
+<p><strong>耗子</strong></p>
+<p>1、 全局范围内调用</p>
+<p>this指向全局对象</p>
+<p>在浏览器宿主里<br>this === window</p>
+<p><strong>小妹</strong></p>
+<p>嗯 明白了</p>
+<p><strong>耗子</strong></p>
+<p>2、函数调用</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span></span>{</div><div class="line">    <span class="comment">//this 这里指向的也是window</span></div><div class="line">}</div><div class="line">hello();</div></pre></td></tr></table></figure>
+
+<p><strong>耗子</strong></p>
+<p>3、方法调用</p>
+<p><strong>耗子</strong></p>
+<p>呃，谁说下函数和方法有什么区别</p>
+<p><strong>小妹</strong></p>
+<p>方法是不是对象里的成员函数？</p>
+<p>如果说错了 可以忽略</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p>对的，不过函数和方法没有本质差别</p>
+<p>其实全局函数都是window对象的成员方法</p>
+<p><strong>耗子</strong></p>
+<p>var obj = {<br>     hello: function(){<br>        //这里的this指向的是哪儿呢？<br>    }<br>}<br>obj.hello();</p>
+<p><strong>小妹</strong></p>
+<p>obj</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>Disappear</strong></p>
+<p>js的继承是不是通过复用对象来继承的？</p>
+<p><strong>耗子</strong></p>
+<p>@Disappear 嗯，js中的继承可以用多种方式来实现</p>
+<p><strong>Disappear</strong></p>
+<p>感觉这个非常迷惑</p>
+<p><strong>耗子</strong></p>
+<p>比如假设一下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span> = {</div><div class="line">     hello: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">         <span class="comment">// this指向的就是window</span></div><div class="line">    }</div><div class="line">};</div><div class="line"><span class="built_in">window</span>.hello();</div></pre></td></tr></table></figure>
+
+<p><strong>耗子</strong></p>
+<p>所以函数调用和方法调用没有本质的区别</p>
+<p><strong>小妹</strong></p>
+<p>嗯</p>
+<p><strong>耗子</strong></p>
+<p>好<br>再一个比较坑爹的</p>
+<p>var obj = {<br>    hello: function(){<br>        function foo(){<br>            // 这里的this指向哪<br>        };<br>        foo();<br>    }<br>};<br>obj.hello();</p>
+<p>这种在面对对象编程里肯定会遇到的问题</p>
+<p><strong>小妹</strong></p>
+<p>== 啊 我分析下</p>
+<p>好像是window诶</p>
+<p>是吗</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>小妹</strong></p>
+<p>我理解就是一点 什么调用函数，this就指向谁</p>
+<p><strong>耗子</strong></p>
+<p>因为this的指向不是静态的<br>而是在运行时，看谁在调用它</p>
+<p><strong>耗子</strong></p>
+<p>4、构造函数中的this调用</p>
+<p><strong>耗子</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span> <span class="params">()</span></span>{</div><div class="line">    <span class="comment">//this</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">new</span> Foo();</div></pre></td></tr></table></figure>
+
+<p><strong>耗子</strong></p>
+<p>这时候的Foo 如果带了new调用和不带new调用，this指向是不一样的</p>
+<p><strong>小妹</strong></p>
+<p>嗯</p>
+<p>不带的时候是window</p>
+<p><strong>雪花</strong></p>
+<p>怎么不一样啊</p>
+<p><strong>耗子</strong></p>
+<p>如果用new调用函数</p>
+<p>this指向生成的新对象</p>
+<p>如果不用new调用，this指向window</p>
+<p><strong>耗子</strong></p>
+<p>js里其实任何函数都可以用new调用<br>所以首字母大写是非常重要的约定</p>
+<p><strong>小妹</strong></p>
+<p>就是作为构造函数的时候是吧？</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>小妹</strong></p>
+<p>嗯 了解了</p>
+<p><strong>耗子</strong></p>
+<p>5、最后一种，显式的this调用<br>这种es3中有apply和call两种方法 es5中有bind方法,可以显示地指定this，让在合适的时候调用</p>
+<p><strong>耗子</strong></p>
+<p>var haozi = {};<br>function foo(){<br>    //this<br>};</p>
+<p>foo.call(haozi)// 这时候this指向haozi</p>
+<p>而不是window</p>
+<p>这在面向对象的编程中很重要</p>
+<p><strong>小妹</strong></p>
+<p>比如apply(obj,func1,func2)，是把func1，function2里的上下文指向obj，</p>
+<p>就是this</p>
+<p>是吗</p>
+<p><strong>耗子</strong></p>
+<p>不对</p>
+<p><strong>小妹</strong></p>
+<p>请说</p>
+<p><strong>耗子</strong></p>
+<p>apply是Function.prototype原型链上的方法<br>不是全局函数</p>
+<p><strong>小妹</strong></p>
+<p>嗯 是的</p>
+<p><strong>耗子</strong></p>
+<p>func.call<br>func.apply</p>
+<p><strong>小妹</strong></p>
+<p>哦</p>
+<p><strong>小妹</strong></p>
+<p>而且apply只接受两个参数，第一个是this指针，第二个是参数数组</p>
+<p>foo.apply(bar, [1, 2, 3]);<br>foo.call(bar, 1, 2, 3);</p>
+<p><strong>耗子</strong><br>嗯<br>我们再回到前面<br>为什么</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="list">(<span class="title">function</span><span class="list">( global )</span>{</span></div><div class="line"></div><div class="line">})<span class="list">(<span class="title">this</span>)</span><span class="comment">;</span></div></pre></td></tr></table></figure>
+
+<p>这里明白了吧<br>在非严格模式下全局作用域下的this指向global<br><strong>耗子</strong></p>
+<p>花了不少的篇幅说如何声明全局变量<br>现在要被我毁掉了<br>因为全局变量是一个很不好的特性</p>
+<p><strong>Disappear</strong></p>
+<p>让我猜猜吧，是不是不容易控制吧，到处都可以改？</p>
+<p><strong>耗子</strong></p>
+<p>嗯<br>是的</p>
+<p><strong>耗子</strong></p>
+<p>另外也会造成命名冲突、代码压缩时不能变成短命名等</p>
+<p>短小优雅的名字大家都容易想到</p>
+<p><strong>耗子</strong></p>
+<p>所以经典的解决方法是引入命名空间</p>
+<p>js中没有原生的namespace</p>
+<p>但是有很强大的对象</p>
+<p><strong>耗子</strong></p>
+<p>就是在window下建一个对象，将函数变成对象的方法</p>
+<p><strong>Disappear</strong></p>
+<p>用对象当命名空间，解决变量和函数的名字冲突，这样理解对吗？</p>
+<p><strong>耗子</strong></p>
+<p>这个在yui2和ext中很常见,jq的$.xxx方法也属于对象的成员方法</p>
+<p>这种模式也叫单体模式</p>
+<p><strong>耗子</strong></p>
+<p>一个庞大的程序，最多只需要一个全局变量就足够了</p>
+<p>这就是一个程序能争取到的全部地盘</p>
+<p><strong>Disappear</strong></p>
+<p>singleton？</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>Disappear</strong></p>
+<p>我感觉理解js的类，对象比较困难，似乎和java，c++不太一样</p>
+<p><strong>耗子</strong></p>
+<p>嗯，和静态语言有很多差别</p>
+<p><strong>耗子</strong></p>
+<p>最后说一下0全局变量</p>
+<p><strong>耗子</strong></p>
+<p>这种是最理想的方法</p>
+<p>比如</p>
+<p>(function(){<br>    // 代码块里不使用window.xxx = xxx; 这样的方式去声明全局函数<br>})();</p>
+<p><strong>耗子</strong></p>
+<p>这样就不会产生全局变量</p>
+<p><strong>耗子</strong></p>
+<p>不过问题是在这个作用域外是无法访问到它的内部变量的</p>
+<p><strong>耗子</strong></p>
+<p>适合一些简单的小脚本开发</p>
+<p><strong>耗子</strong></p>
+<p>如果需要模块化开发<br>我们需要另一种方式去管理代码<br>这在服务端nodejs中尤为常见</p>
+<p><strong>耗子</strong></p>
+<p>那么它又是如何实现0全局变量的呢？</p>
+<p>这种无污染的0全局变量的方式又是如何工作在客户端的呢？</p>
+<p><strong>耗子</strong></p>
+<p>不知道大家有没有兴趣听了</p>
+<p><strong>小白</strong></p>
+<p>有</p>
+<p><strong>耗子</strong></p>
+<p>嗯</p>
+<p><strong>耗子</strong></p>
+<p>这就是现在流行的amd和cmd模块了</p>
+<p><strong>耗子</strong></p>
+<p>两者理论上都能消灭客户端的全局变量依赖</p>
+<p><strong>耗子</strong></p>
+<p>时间不早了<br>今天大家貌似都比较忙，就不展开讲amd和cmd了，下次做为一个章节来讲吧</p>
+<p>诸位晚安</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/05-避免使用全局变量/" data-id="cnc1vf8xd6ct6rtv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/waiting for network configuration/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ubuntu开机出现waiting for network configuration的解决方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/04-UI层的松耦合/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【共学】《编写可维护的javascript》04-UI层的松耦合</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="文章在原站点中的ID" data-title="文章标题" data-url="文章网址"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"haozide"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+
+</section>
+            
+              <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/canvas/" style="font-size: NaNpx;">canvas</a><a href="/tags/other/" style="font-size: NaNpx;">other</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+          </li>
+        
+          <li>
+            <a href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+          </li>
+        
+          <li>
+            <a href="/post/404状态码的坑/">404状态码的坑</a>
+          </li>
+        
+          <li>
+            <a href="/post/use-git-in-local/">use git in local</a>
+          </li>
+        
+          <li>
+            <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+            
+          </div>
+          <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 耗子<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+</nav>
+        <script src="http://s4.qhimg.com/static/74e86b3d770b4acd.js"></script>
+
+
+
+
+
+
+
+<s style="display:none"><script src="http://s19.cnzz.com/stat.php?id=5459156&web_id=5459156"></script></s>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41952285-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+      </div>
+    </body>
+    </html>
+

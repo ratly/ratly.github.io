@@ -1,0 +1,103 @@
+@import "compass/css3";
+
+$gray-1: #e6e6e6;
+$gray-2: #a9a9a9;
+$gray-3: #797979;
+$gray-4: #515151;
+::selection {
+    color: white;
+    background-color:#d33682;
+    @include text-shadow(none);
+}
+a {
+    color: #F3AC5A;
+    background-color: transparent;
+    border-bottom: 0;
+    &:hover {
+        color: #F5BE78;
+        background-color: transparent;
+    }
+}
+h1, h2, h3 {
+    color: #E8F0F3;
+    @include text-shadow(3px 4px 2px #000);
+    letter-spacing: 4px;
+}
+
+h1 {
+    @include text-shadow(3px 5px 3px #000);
+}
+
+button {
+    @include background(linear-gradient(#F9F9F9 40%, #E3E3E3 70%));
+    border: 1px solid $gray-2;
+    @include text-shadow(1px 1px #fff);
+}
+button:not(:disabled):hover {
+    border-color: $gray-4;
+}
+
+button:not(:disabled):active {
+    @include background(linear-gradient(#E3E3E3 40%, #F9F9F9 70%));
+}
+table {
+    width: 100%;
+    color: black;
+    border-bottom: 0 none;
+    @include box-shadow(1px 1px 10px #000);
+
+    thead th{
+        background-color: $gray-1;
+    }
+    tr{
+        background-color: white;
+    }
+    tr:nth-child(even) {
+        background-color: $gray-1;
+    }
+
+
+    td.highlight {
+        color: #468847;
+        background-color: #dff0d8 !important;
+    }
+
+    &.rows {
+        border-right: 1px solid $gray-3;
+    }
+}
+slides > slide{
+    -webkit-font-smoothing: subpixel-antialiased;
+    color: #E8F0F3;
+    letter-spacing: 2px;
+    background: -webkit-radial-gradient(center, circle cover, #08415A 0%, #09304C 100%);
+    &:nth-child(6n+1),
+    &:nth-child(6n+2),
+    &:nth-child(6n+3),
+    &:nth-child(6n+4),
+    &:nth-child(6n+5){
+        background: -webkit-radial-gradient(center, circle cover, #08415A 0%, #09304C 100%)
+    }
+    .slide-wrapper{
+        blockquote {
+            background-color: transparent;
+            border-left: 0 none;
+            color: #E5DCDC;
+            padding: 0px;
+            @include text-shadow(2px 3px 1px #000);
+            p {
+                font-size: 22px;
+            }
+            small{
+                color: #999;
+                &::before{
+                    content: '\2014 \00A0';
+                }
+            }
+        }
+    }
+}
+
+.progress span{
+    background: #2187E7;
+}

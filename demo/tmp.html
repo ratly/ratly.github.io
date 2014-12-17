@@ -1,0 +1,19 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script>
+        var a = 1;
+        function foo (a) {
+            'use strict';
+            arguments[0] = 'changeA';
+            console.log(a); // 严格模式为1 ,普通模式为 changeA
+        }
+        foo(a);
+        console.log(a)
+        </script>
+    </body>
+    </html>

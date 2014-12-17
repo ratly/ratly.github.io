@@ -1,0 +1,324 @@
+ 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>客户端存储 - 耗子的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+        <link rel="alternative" href="/atom.xml" title="耗子的" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    
+</head>
+    <body>
+      <div id="container">
+        <div id="wrap">
+          <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">耗子的</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://haozi.de"></form>
+      </div>
+    </div>
+  </div>
+</header>
+          <div class="outer">
+            <section id="main"><article id="post-客户端存储" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/客户端存储/" class="article-date">
+  <time datetime="2014-03-21T17:43:09.000Z" itemprop="datePublished">Mar 22 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      客户端存储
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="cookie_和_cookie_的局限">cookie 和 cookie 的局限</h2>
+<p>我们知道HTTP 本身是一种无状态、无连接的协议，用户在浏览器上请求一个动作时，服务器不会知道用户上次动作做了什么，因此如果要存储诸如登录与否、已录入文本等状态信息是非常麻烦的，对于开发交互式的程序来说这很致命，而cookie技术的发明则满足了大部分的状态存储的需求。 从根本上来讲，cookie 其实就是一段存储在客户端（浏览器）的文本，我们既可以在服务器响应返回时设置cookie的值，也可以在前端通过 js 进行修改。</p>
+<p>我们考虑一个最简单的登录场景来说明 cookie 是如何实现状态存储的，当你向百度服务器发送了你的用户名密码并且验证过你的身份之后，服务器端会在响应客户端时的 HTTP 包的包头中的加上一个cookie字段，这个字段则可能是类似 BAIDUID=XXX 的值，是服务器分配给你的唯一标识符，这段文本将存储在你的计算机磁盘中，当你继续浏览百度的其他页面时，每次http请求都会带上cookie这个字段，这样服务器端就可以确认这个请求依然来自于登录后的你，从而从某种意义上来说“保存”了登录状态，这时读者可能要问了，不同网站登录时都会发送吗？那岂不是谷歌就可以知道我百度的账号了？当然不是，cookie的使用是有限制的，这个限制便来自于域，不同域间的cookie是不会影响也不可访问。（注：域限制是Cookie安全的基础，这个话题有很多值得深入讨论的点，比如跨父域子域进行ajax访问，多个域名时如何跨域进行身份验证等）<br><a id="more"></a><br>从上面的例子很容易理解，BAIDUID是一个cookie的名称(name)，用于唯一标识一个具体的cookie，但cookie的名称是不区分大小写的，例如BAIDUID和baiduid标识了同一个cookie；而XXX则是该cookie的值(value)，除了名值外，cookie还包含域、路径、失效时间等信息，所有这些信息都可以通过前端或后端两个途径进行设置，下面讨论浏览器端的cookie操作（服务器端如何设置cookie不是我们的重点）。</p>
+<p>在浏览器上我们通过对document.cookie属性的存取来操作cookie。随便打开一个网页，在chrome控制台中键入document.cookie后回车即可以看到此页面下可用的完整的cookie内容，会是个如下形式的值：</p>
+<p>“uid=abc; LM=1394675994”类似<br>cookie以;号分割的字符串;如果要设置一个cookie，我们可以这样做：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.cookie=<span class="string">"foo=bar"</span></div></pre></td></tr></table></figure>
+
+<p>这时我们创建了名为foo，值为bar的cookie，document.cookie并不仅仅是一个普通的字符串，这个属性有着很奇怪的特性，虽然上面的语句看起来是赋值语句，但却不会覆盖cookie原来的值，而是会将新cookie添加到后面，创建完毕后的document.cookie会是这样：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"uid=abc; LM=1394675994;foo=bar"</span></div></pre></td></tr></table></figure>
+
+<p>可以看到新创建的cookie添加到后面了，但由于直接访问document.cookie只能获取到完整的字符串，要进一步获取具体的键值对就必须得手工操作这个字符串，为了方便地操作cookie，我们可以封装名两个函数，名为getCookie和setCookie：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCookie</span><span class="params">(name)</span> </span>{</div><div class="line">    <span class="keyword">var</span> cookieName = <span class="built_in">encodeURIComponent</span>(name) + <span class="string">"="</span>,</div><div class="line">        cookieStart = <span class="built_in">document</span>.cookie.indexOf(cookieName),</div><div class="line">        cookieValue = <span class="literal">null</span>,</div><div class="line">        cookieEnd;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(cookieStart &gt; -<span class="number">1</span>) {</div><div class="line">        cookieEnd = <span class="built_in">document</span>.cookie.indexOf(<span class="string">";"</span>, cookieStart)</div><div class="line">        <span class="keyword">if</span>(cookieEnd == -<span class="number">1</span>) {</div><div class="line">            cookieEnd = <span class="built_in">document</span>.cookie.length;</div><div class="line">        }</div><div class="line">        cookieValue = <span class="built_in">decodeURIComponent</span>(<span class="built_in">document</span>.cookie.substring(cookieStart + cookieName.length, cookieEnd));</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> cookieValue;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setCookie</span><span class="params">(name, value, opt_expires, opt_path, opt_domain, opt_secure)</span> </span>{</div><div class="line">    <span class="keyword">var</span> cookieText = <span class="built_in">encodeURIComponent</span>(name) + <span class="string">"="</span> + <span class="built_in">encodeURIComponent</span>(value);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(opt_expires <span class="keyword">instanceof</span> <span class="built_in">Date</span>) {</div><div class="line">        cookieText += <span class="string">"; expires="</span> + opt_expires.toGMTString();</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(opt_path) {</div><div class="line">        cookieText += <span class="string">"; path="</span> + opt_path;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(opt_domain) {</div><div class="line">        cookieText += <span class="string">"; domain="</span> + opt_domain;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(opt_secure) { <span class="comment">// 安全标志，指定该标志后只有在使用 SSL 连接时才会发送cookie（即发送到https://开头的域）</span></div><div class="line">        cookieText += <span class="string">"; secure"</span>;</div><div class="line">    }</div><div class="line">    <span class="built_in">document</span>.cookie = cookieText;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>代码完整展示了如何存取一个具体的cookie，之所以在每个过程都使用encodeURIComponent和decodeURIComponent对名值对儿进行编解码是为了确保cookie能被正确发送到服务器，setCookie函数中只有key和value是必须的，domain等参数可选且不会发送到服务器，比如现在要想获取名uid的cookie值，并在后面加上4，我们可以这样做：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span>Cookie(<span class="string">'uid'</span>, getCookie(<span class="string">'uid'</span>) + <span class="number">4</span>)</div></pre></td></tr></table></figure>
+
+<p>如果要删除一个cookie，我们只需要将key的值设置为空字符串，并将它的过期时间设置为过去的时间即可，由此可以得到下面这个unsetCookie 函数：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">unsetCookie</span><span class="params">(name, path, domain, secure)</span> </span>{</div><div class="line">    setCookie(name, <span class="string">""</span>, <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">0</span>), path, domain, secure);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>如此一来这个蹩脚的接口已经变得很方便开发人员操作了。</p>
+<p>除了前面提到的域限制以外，Cookie还有一些其他的限制，其中比较重要的便是大小和数量限制。不同浏览器在实现cookie时，采用了不同的限制策略。常见浏览器在cookie数量上的限制如下：</p>
+<ul>
+<li>IE6 及更低版本每个域最多20个cookie。</li>
+<li>IE7 及更高版本每个域最多50个cookie。</li>
+<li>Firefox 每个域最多50个cookie。</li>
+<li>Opera 为每个域30个cookie。</li>
+<li>Webkit内核（chrome &amp;safari）没有对cookie数量做明确限制，但是如果cookie太大以至于超过了HTTP头部大小限制时，服务器将无法正确处理。<br>为了突破cookie个数限制，可以采用一种名为子cookie的技术，其基本原理是在一个cookie内存储多个名值对,比如将value再以|号分割。</li>
+</ul>
+<p>除了数量限制，浏览器对cookie的尺寸也做了限制，大多数浏览器都将cookie的尺寸限制在 4096B 左右 。</p>
+<p>虽然cookie会存在用户磁盘里，但严格地说cookie并不能算是本地存储技术。因为每次请求站点的所有cookie都会被发送到服务器，如果将太多数据存放在cookie当中会严重降低传输性能，加上cookie本身还有大小和数量限制，所以cookie并不适合在客户端存储数据。如果要在本地存储大量数据，还得另寻其他方式。而 HTML5 规范中的 Web Storage 便是专门为大量本地数据的存储设计的。</p>
+<h2 id="localStorage_&amp;_sessionStorage">localStorage &amp; sessionStorage</h2>
+<p>Storage在浏览器中被实现为一个类型，但开发者是不被允许实例化Storage对象的，浏览器已经内置有两个已经实例化好的对象，一个是sessionStorage，另一个是localStorage，其中sessionStorage中存储的数据只在单个页面的会话期间有效，sessionStorage更类似于一个页面上的全局变量，而localStorage的数据则会被持久化到客户端，而且永远不会过期（cookie是可以设置过期时间的），并且其容量也不像cookie那样受限，因此localStorage成为了我们存储本地数据的不二之选。来看一个简单的例子以了解其基本使用方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">window</span>.localStorage) { <span class="comment">// 检测浏览器是否支持 localStorage</span></div><div class="line">    <span class="comment">// 存</span></div><div class="line">    localStorage.name = <span class="string">'haozi'</span></div><div class="line">    localStorage.setItem(<span class="string">'sex'</span>, <span class="string">'male'</span>)</div><div class="line">    <span class="comment">// 取</span></div><div class="line">    console.<span class="keyword">log</span>(localStorage.name) <span class="comment">// haozi</span></div><div class="line">    console.<span class="keyword">log</span>(localStorage.sex) <span class="comment">// male</span></div><div class="line">    <span class="comment">// 删</span></div><div class="line">    <span class="keyword">delete</span> localStorage.name</div><div class="line">    console.<span class="keyword">log</span>(localStorage.name) <span class="comment">// undefined</span></div><div class="line">    localStorage.removeItem(<span class="string">'sex'</span>)</div><div class="line">    console.<span class="keyword">log</span>(localStorage.getItem(<span class="string">'sex'</span>)) <span class="comment">// null</span></div><div class="line">    localStorage.<span class="keyword">clear</span>() <span class="comment">// 清空所有数据</span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>可以看到使用localStorage读写数据很方便，既可以像操作普通对象那样去存取，也可以使用setItem、getItem和removeItem方法来存、取和删除 key。要注意的是，localStorage和普通对象不同在于只能存储字符串，如果你试图存储其他类型的数据，将会被强制转换成字符串，下面的例子最后会在控制台打印出 [object Object]：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">localStorage<span class="built_in">.</span><span class="built_in">data</span> <span class="subst">=</span> {</div><div class="line">    <span class="string">'name'</span>: <span class="string">'haozi'</span></div><div class="line">}</div><div class="line">console<span class="built_in">.</span><span class="keyword">log</span>(localStorage<span class="built_in">.</span><span class="built_in">data</span>) <span class="comment">// [object Object]</span></div><div class="line"></div><div class="line">localStorage<span class="built_in">.</span>haozi <span class="subst">=</span> window<span class="built_in">.</span>haozi</div><div class="line">localStorage<span class="built_in">.</span>haozi <span class="comment">// "undefined"</span></div></pre></td></tr></table></figure>
+
+<p>如果要存储对象，则可以先使用window.JSON对象提供的 stringify 和 parse 方法对JSON数据进行序列化和反序列化：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">localStorage.data = <span class="built_in">JSON</span>.stringify({</div><div class="line">    <span class="string">'name'</span>: <span class="string">'haozi'</span></div><div class="line">})</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(localStorage.data).name) <span class="comment">// haozi</span></div></pre></td></tr></table></figure>
+
+<p>localStorage对象的关键便在于持久化数据，当我们关闭浏览器再打开网站，依然可以访问到这个域存储的数据。</p>
+<p>由于localStorage与sessionStorage都是Storage的实例，你可以完全使用和localStorage相同的方式去使用sessionStorage，它们共享Storage接口提供的一组方法和属性：</p>
+<ul>
+<li>setItem(key, value) 设置一个key</li>
+<li>getItem(key) 获取一个key</li>
+<li>removeItem(key) 移除一个key</li>
+<li>length 类似数组length属性，用于访问Storage对象中item的数量</li>
+<li>key(n) 用于访问第 n 个 key 的名称，如 name</li>
+<li>clear() 清除当前域下的所有localStorage内容。</li>
+</ul>
+<p>而sessionStorage和localStorage不同之处在于存取数据生命周期不一样，只要一直在这个域内连续访问，存储在sessionStorage的数据会一直存在，而一旦关闭页面或者浏览器后所有存储的内容便消失了（这意味着sessionStorage不会将数据存入磁盘）。</p>
+<p>对Storage对象进行的所有修改都会触发文档上的storage事件。 其中事件对象会有以下属性：</p>
+<ul>
+<li>domain：发生变化的域名。</li>
+<li>key: 发生修改的键。</li>
+<li>oldValue: 修改前的值。</li>
+<li>newValue: 修改后的值（如果是删除一个键，则为null）<br>下面的代码展示了如何监听该事件：</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">document.addEventListener(<span class="string">"storage"</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span></div><div class="line">    // 截止到目前为止，尚无浏览器完整实现这些事件属性</div><div class="line">    // console.<span class="built_in">log</span>(<span class="string">"Storage changed. Name '"</span> + <span class="keyword">e</span>.key + <span class="string">"' changed from '"</span> + <span class="keyword">e</span>.oldValue + <span class="string">"' to '"</span> + <span class="keyword">e</span>.newValue + <span class="string">"'"</span>)</div><div class="line">})</div></pre></td></tr></table></figure>
+
+<p>sessionStorage和localStorage都会触发此事件，但无法区分究竟是谁触发的事件。 而且这个事件现目前尚有兼容性问题，所以不建议使用此事件。<br><a href="http://www.cnblogs.com/shihao/archive/2011/12/23/2298854.html" target="_blank" rel="external">http://www.cnblogs.com/shihao/archive/2011/12/23/2298854.html</a></p>
+<p>要注意，IE8中的Web Storage有10MB 的存储容量限制，而Firefox、Google Chrome 和 Opera中每个域名可以存储5MB的数据，不过对于大多数的应用来说5MB已经足够了。另外，IE提供了一个非标准的remainingSpace 属性用于查看剩余多少可用空间（单位是字节），下面这个函数可以获取剩余容量的百分比：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getRemainingSpacePercent</span><span class="params">()</span> </span>{</div><div class="line">    <span class="keyword">if</span>(localStorage.remainingSpace) {</div><div class="line">        <span class="keyword">return</span> localStorage.remainingSpace / <span class="number">5000000</span> * <span class="number">100</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>如果你想实现一些需要在本地存储数据的功能，比如记住用户偏好或个性化设置、恢复页面上次打开状态等等，Web Storage 会是一个绝佳的选择。下面我们来实现一个页面访问计数器练练手：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">本次访问已经查看过该页面 <span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"count1"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span> 次</div><div class="line">历史上你已经查看过该页面 <span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"count2"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span> 次</div><div class="line"><span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"btn"</span>&gt;</span>清零<span class="tag">&lt;/<span class="title">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">updateCounter</span> <span class="params">()</span> </span>{</div><div class="line">        <span class="built_in">document</span>.getElementById(<span class="string">"count1"</span>).innerHTML = sessionStorage.pageLoadCount || <span class="number">0</span>;</div><div class="line">        <span class="built_in">document</span>.getElementById(<span class="string">"count2"</span>).innerHTML = localStorage.pageLoadCount || <span class="number">0</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(localStorage.getItem(<span class="string">"pageLoadCount"</span>) === <span class="literal">null</span> ) {</div><div class="line">        localStorage.setItem(<span class="string">"pageLoadCount"</span>, <span class="number">0</span>)</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(sessionStorage.getItem(<span class="string">"pageLoadCount"</span>) === <span class="literal">null</span> ) {</div><div class="line">        sessionStorage.setItem(<span class="string">"pageLoadCount"</span>, <span class="number">0</span>)</div><div class="line">    }</div><div class="line">    localStorage.pageLoadCount = <span class="built_in">parseInt</span>(localStorage.getItem(<span class="string">"pageLoadCount"</span>)) + <span class="number">1</span></div><div class="line">    sessionStorage.pageLoadCount = <span class="built_in">parseInt</span>(sessionStorage.getItem(<span class="string">"pageLoadCount"</span>)) + <span class="number">1</span></div><div class="line">    updateCounter()</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"btn"</span>).onclick = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{</div><div class="line">        localStorage.clear()</div><div class="line">        sessionStorage.clear()</div><div class="line">        updateCounter()</div><div class="line">    }</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>本次访问已经查看过该页面 <span id="count1"></span> 次<br><br>历史上你已经查看过该页面 <span id="count2"></span> 次<br></p>
+<script>
+    (function(){
+        function updateCounter () {
+            document.getElementById("count1").innerHTML = sessionStorage.pageLoadCount || 0;
+            document.getElementById("count2").innerHTML = localStorage.pageLoadCount || 0;
+        }
+        if(localStorage.getItem("pageLoadCount") === null ) {
+            localStorage.setItem("pageLoadCount", 0)
+        }
+        if(sessionStorage.getItem("pageLoadCount") === null ) {
+            sessionStorage.setItem("pageLoadCount", 0)
+        }
+        localStorage.pageLoadCount = parseInt(localStorage.getItem("pageLoadCount")) + 1
+        sessionStorage.pageLoadCount = parseInt(sessionStorage.getItem("pageLoadCount")) + 1
+        updateCounter()
+
+    })();
+</script>
+
+<p>Web Storage在桌面和移动设备的浏览器中都有很好的支持，除了Opera Mini 和IE8以下版本的浏览器外，基本上其他浏览器都可以完美支持。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://haozi.de/post/客户端存储/" data-id="le14huek794h6f4x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/waiting for network configuration/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ubuntu开机出现waiting for network configuration的解决方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="文章在原站点中的ID" data-title="文章标题" data-url="文章网址"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"haozide"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+
+</section>
+            
+              <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/canvas/" style="font-size: NaNpx;">canvas</a><a href="/tags/other/" style="font-size: NaNpx;">other</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/检测页面全局变量脚本/">检测页面全局变量脚本</a>
+          </li>
+        
+          <li>
+            <a href="/post/严格模式下arguments的限制/">严格模式下arguments的限制</a>
+          </li>
+        
+          <li>
+            <a href="/post/404状态码的坑/">404状态码的坑</a>
+          </li>
+        
+          <li>
+            <a href="/post/use-git-in-local/">use git in local</a>
+          </li>
+        
+          <li>
+            <a href="/post/unable-to-get-image-data-from-canvas-because-the-canvas-has-been-tainted-by-cross-origin-data问题产生原因及解决办法/">Unable to get image data from canvas because the canvas has been tainted by cross-origin data问题产生原因及解决办法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+            
+          </div>
+          <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 耗子<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+</nav>
+        <script src="http://s4.qhimg.com/static/74e86b3d770b4acd.js"></script>
+
+
+
+
+
+
+
+<s style="display:none"><script src="http://s19.cnzz.com/stat.php?id=5459156&web_id=5459156"></script></s>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41952285-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+      </div>
+    </body>
+    </html>
+

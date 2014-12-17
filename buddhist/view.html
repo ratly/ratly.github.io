@@ -1,0 +1,29 @@
+
+    <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>佛经格式转换工具</title>
+    <link href="buddhist.css" rel="stylesheet">
+</head>
+<body>
+<div id="output" class="fhcyj"></div>
+<script src="marked.js"></script>
+<script src="do-switch.js"></script>
+<script>
+    var outputDom = document.getElementById('output');
+    // 走本地存储
+    //var content = localStorage.getItem('content');
+
+    // 用地址取值，IIS有限制“404.15 请求筛选模块被配置为拒绝包含的查询字符串过长的请求。”
+    var href = document.location.href;
+    var content = href.slice(href.indexOf('?') + 1);
+    content = decodeURI(content);
+
+    content = escapeHTML(content);
+    content = content.replace('\\n', '\n');
+    content = doSwitch(content);
+    outputDom.innerHTML = content;
+</script>
+</body>
+</html>

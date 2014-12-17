@@ -1,0 +1,494 @@
+
+    
+<!doctype html>
+<html>
+<head>
+	<meta name="renderer" content="webkit">
+	<meta charset="utf-8">
+	<title>送给你的2014</title>
+</head>
+<style>
+html,body{
+	background: #c6cacf url("data:image/gif;base64,R0lGODlhBQAvAIAAAMbKzsbKzyH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUM3QUM3MUFGMUNEMTFFMUI5QjBEMDZFMEM2RTlCOTgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUM3QUM3MUJGMUNEMTFFMUI5QjBEMDZFMEM2RTlCOTgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBQzdBQzcxOEYxQ0QxMUUxQjlCMEQwNkUwQzZFOUI5OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpBQzdBQzcxOUYxQ0QxMUUxQjlCMEQwNkUwQzZFOUI5OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAAAAAAALAAAAAAFAC8AAAITjI+py+0Po5xUgouz3rz7D4ZcAQA7") repeat;
+}
+*{margin: 0; padding: 0;box-sizing:border-box;}
+html{
+	font: 500 0.875em/1.8 Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+	-webkit-transition: all .2s;
+	color:#444333;
+
+}
+html{
+	height: 100%;
+}
+body{height: 99.9%}
+	#timerWrap,
+	#wrap {
+		padding:5px 15px;
+		background: #fff;
+		width: 600px;
+		margin:5px auto 0;
+		box-shadow: 5px 5px 5px #333;
+		border: 1px solid #A9B0B8;
+		box-shadow: 0 0 11px 2px rgba(0, 0, 0, 0.3);
+		-webkit-transition: all .2s;
+	}
+	#timerWrap{
+		width: 300px;
+		height: 300px;
+		position: absolute;
+		top:50%;
+		left: 50%;
+		margin-left: -150px;
+		margin-top: -150px;
+		padding-bottom:30px;
+		text-align: center;
+	}
+	#timerWrap.hide{
+		display: none;
+	}
+	#timerWrap .gift{
+		display: block;
+		width: 200px;
+		height: 200px;
+		margin:20px auto;
+	}
+
+	/* 信封 */
+	#envelopeWrap{
+
+	}
+	#envelopeWrap.hide{
+		opacity: 0;
+		position: absolute;
+	}
+	#envelope{
+		overflow: hidden;
+		position: absolute;
+		width: 530px;
+		height: 444px;
+		top: 50%;
+		left: 50%;
+		margin-left:-275px;
+		margin-top: -222px;
+		-webkit-transition: all 1s ease-in-out .3s;
+	}
+	#envelope:before {
+		content: '';
+		position: absolute;
+		bottom: 128px;
+		left: 0px;
+		background: url(http://p6.qhimg.com/t012c11f1bdc6af6b3e.png);
+		width: 530px;
+		height: 316px;
+		z-index: 0;
+	}
+	#envelope:after{
+		content: '';
+		position: absolute;
+		bottom: 0px;
+		left: 0;
+		background: url(http://p7.qhimg.com/t0152497a8a3f4e6531.png);
+		width: 530px;
+		height: 258px;
+		pointer-events: none;
+	}
+	#envelope .paper{
+		position: relative;
+		top:200px;
+		background:#fff url(http://p7.qhimg.com/t01828e3ad7b7086261.png) no-repeat 64px 21px;
+		width: 400px;
+		height: 500px;
+		margin: 0 auto;
+		border-radius: 3px;
+		-webkit-transition: all 1s ease-in-out .3s;
+	}
+	#envelope:hover {
+		margin-top:-177px;
+	}
+	#envelope:hover .paper{
+		top:150px;
+	}
+
+	/* 正文 */
+	#wrap{
+		position: relative;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		min-height: 80%;
+		padding-bottom: 40px;
+	}
+	#wrap.hide{
+		opacity: 0;
+		position: absolute;
+	}
+	p {
+		text-indent: 2em;
+	}
+	#letter{
+		/*border:1px solid #f00;*/
+		display: inline;
+	}
+	#letter img {
+		display: inline;
+		vertical-align:text-bottom;
+	}
+	.blink:after{
+		background-color: #000;
+		color: #fff;
+		display: inline-block;
+		margin-bottom: -.12em;
+		margin-left: .4em;
+		min-width: 1px;
+		vertical-align: baseline;
+		width: .02em;
+		content: ' .';
+		-webkit-animation: blink 1s step-end infinite;
+	}
+	#letter .spaceH{
+		height: 50px;
+	}
+	.btnwrap {
+		margin-top:50px;
+		text-align: center;
+		-webkit-animation: btnwrap 1s;
+	}
+	button{
+		cursor: pointer;
+		border:1px solid #cf0;
+		box-shadow:inset 0 1px 1px #76dd53;
+		font-size:18px;
+		color:#fff;
+		text-shadow:1px 1px 1px #666;
+		border:1px solid #0f9b08;
+		border-radius:3px;
+		background:#3bce09;
+		padding:3px 22px;
+		background-image:-webkit-linear-gradient(top, #3bce09, #39be08);
+		background-image:linear-gradient(top, #3bce09, #39be08)
+	}
+	button:hover {
+		border-color:#11b308;
+		background:#40d00b;
+		background-image:-webkit-linear-gradient(top, #40d00b, #38c906);
+		background-image:linear-gradient(top, #40d00b, #38c906);
+		text-decoration:none;
+		color:#fff;
+	}
+	button#cancel{
+		margin-right:30px;position: relative;
+		-webkit-transition: all .2s;
+	}
+	@-webkit-keyframes blink {
+		0%{opacity: 1;}
+		50% {opacity: 0}
+	}
+	@-webkit-keyframes btnwrap {
+		0%{opacity: 0;}
+		100% {opacity: 1;}
+	}
+</style>
+<body>
+	<div id="timerWrap" class="hide">
+		<img src="http://p6.qhimg.com/t01f50dfa57284f6925.png" class="gift">
+		还需要<span id="timer"></span>才能打开礼物！
+	</div>
+	<div id="envelopeWrap" class="hide">
+		<div id="envelope">
+			<div class="paper" id="view"></div>
+		</div>
+	</div>
+	<div id="wrap" class="hide">
+		<div id="letter"></div>
+	</div>
+	<audio preload="auto" loop>
+		<source src="syz.ogg" type="audio/ogg">
+		<source src="syz.mp3" type="audio/mpeg">
+	</audio>
+	<script>
+		var pics = (function () {
+			_pics = {
+				gift: 'http://p6.qhimg.com/t01f50dfa57284f6925.png',
+				tx: 'http://p7.qhimg.com/t013df9539df9598466.gif',
+				bobi:'http://p9.qhimg.com/t011e12a4426b9a6729.gif'
+			}
+			return function (i) {
+				return '<img src="' + _pics[i] + '">';
+			}
+		})();
+		var letter = []
+			.concat('致'.split('')).concat('<br>')
+			.concat('　　小香子同学：'.split('')).concat('<br>')
+			.concat('　　我想你一定收到过情书，但绝对没有收到过如此奇葩的情书'.split('')).concat(pics('tx')).concat('<br>')
+			.concat('　　　'.split('')).concat('=================以下是严肃的分割线=================').concat('<br>').concat('<br>')
+
+			.concat('　　辗转反侧，躺在床上在给你写的这封信。我大部分时间都不正经，但也会有一本正经地想和你说些心里话的时候。'.split('')).concat('<br>')
+			.concat('　　和你从11月12号第一次取得联系至今已经快两个月了。我不知道时间算不算长。'.split('')).concat('<br>')
+			.concat('　　第一次在珍爱网看到你，就被你吸引。我不敢说你是最漂亮的，但却绝对是最特别的。我有一种预感，一种隔世的熟悉。你的星座，还有你胸口和我一样有颗痣。从未有过的冲动迫切地渴望与一个人相识。我翻遍了你主页上的每一条内容希望找到你的联系方式。正当我计划要不要付费时，鬼使神差地逛了下佳缘。'.split('')).concat('<br>')
+			.concat('　　你很难感受到当时我那不可名状的惊讶与喜悦。'.split('')).concat('<br>')
+			.concat('　　这如果不是'.split('')).concat('<span style="color:red">命中注定</span>').concat('，还有什么是?'.split('')).concat('<br>')
+			.concat('　　和你相识日子，我重新找回了快乐,自信与期待。'.split('')).concat('<br>')
+			.concat('　　我性格里有很多自卑的地方。瘦小的身躯，其貌不扬，这些都让我陷入深深的自卑中。'.split('')).concat('<br>')
+			.concat('　　我家境也不好，从小没买过几件衣服，一直靠城里的亲戚救助。我知道世事艰难，不会乱花钱，也能吃苦。'.split(''))
+			.concat('小时候老师们总喜欢背后甚至人前议论我父母的是与非，我讨厌同情的目光，也从不崇拜权威。父母们总是为钱哎声叹气甚至争吵，但我很爱他们，我知道他们已经把最好的都给我了。'.split('')).concat('<br>')
+			.concat('　　我只念了两年大专，工作的前三年工资只有2000，还失过业，从没休过周六，受过很多人白眼。所以我性格里有自负的地方。'.split('')).concat('<br>')
+			.concat('　　我生命里有很多朋友不辞而别，有些人今天还和你不知道多亲近第二天就无端地再不和你联系。'.split('')).concat('<br>')
+			.concat('　　这一切让我很没安全感，也让我很难有勇气不顾一切地投入感情。'.split('')).concat('<br>')
+			.concat('　　我是个生活中很简单的人，我弄不清地名路线，弄不清手机话费五险一金，更弄不懂女孩子的心事。我对人是从来不伪装的，喜欢就是真喜欢，不喜欢绝对装不出喜欢。'.split('')).concat('<br>')
+			.concat('　　我三观正常，不拜金，懂得平等与尊重。对我好的人绝对会加倍回报，对我坏的不一定会报负，但绝对嗤之以鼻。'.split('')).concat('<br>')
+			.concat('　　对于感情，我很专一，绝对不会旁生枝节。我的择友准责其实很简单：漂亮，智商不低于平均线，能对我好，三观正常，女的。'.split('')).concat('<br>').concat('<br>')
+
+			.concat('　　我眼中的你,知识水平，智商情商都和我处在一个层面。'.split('')).concat('<br>')
+			.concat('　　你细心，直白, 诚实，外表快乐，内心孤独，坚强执著，追求美好的事物，让人开心。也能沉得下心，会为别人考虑，満脑子各种想法, 不伪装自己，懂得珍惜，会倾听，约会不玩手机。'.split('')).concat('<br>')
+			.concat('　　你也会逃避，有很自卑的一面。你渴望被尊重，渴望自我超越。'.split('')).concat('<br>')
+			.concat('　　你内心坚强渴望独立，也有小女人的一面，渴望被照顾，被哄，有个大叔可以小鸟依人。'.split('')).concat('<br>')
+
+            .concat('　　互联网上充斥着各种扭曲的道德与价值观，交友网站上也有很多人动机不纯，但我却渴望一份纯真的爱情，我想你也一样。'.split('')).concat('<br>')
+            .concat('　　我在很认真地与你交往，我认定的目标不会轻易改变，我关掉了交友网的帐号，我也能感受到你的诚意。我是以婚姻家庭为目标的，我会是个很顾家的人。'.split('')).concat('<br>')
+
+            .concat('　　我是很很少发火的人，但越是我在乎的人我越会多想。我希望我们如果在一起相处的话，能够一直能开诚布公地交流，不要拐弯抹角，不要隐喻。畅通的沟通与相互的尊重是很重要的。'.split('')).concat('<br>')
+            .concat('　　我是个很没有安全感的人，一定要经常给我安全的信号。如果和我吵架，而你没有真正做好分手的打算的话，千万不要以分手之类的话相威胁，一旦我心里有了不安全感，我一定触发自我保护机制，把对你的真情投入降到0，哪怕之后和好，内心深处的阴影也很难治愈，这一点切记！'.split('')).concat('<br>')
+            .concat('　　我或许很难大富大贵，但我一定有能力挣钱养家，我会努力地，脚踏实地地奋斗，不画不可能实现的饼，不说做兑现不了的承诺。我坚信，我这一代多努力一些，会让下一代有个比我小时候要好得多的童年。幸福的生活需要大家一起努力创造。'.split('')).concat('<br>')
+            .concat('　　我不死板迂腐，我会懂得浪漫，我有十足的信心把你哄开心。'.split('')).concat('<br>')
+            .concat('　　我想爱情绝对不是一见钟情的感觉，而是长期相处与磨合而来的。都说相爱容易相处难，能处得来的关系才会产生恒久的爱情。'.split('')).concat('<br>')
+            .concat('　　请相信我一定是一只潜力股，也请相信你做的选择，一定会让你成为这世界上第二幸福的人，而我，将会成为第一。'.split('')).concat('<br>')
+			.concat('　　小吃货，今天，2014年1月1日，我认真的、正式地邀请你做我的'.split('')).concat('<span style="color:red">女朋友</span>').concat('，好么？我已经不习惯没有你的生活了。'.split('')).concat('<br>').concat('<br>').concat('<br>')
+
+
+		var gPrintting = false;
+		function random(start, end) {
+			switch (arguments.length) {
+				case 1 :
+					return Math.random() * start  + 1;
+				case 2 :
+					return Math.random() * (end - start + 1) + start;
+				default :
+					return Math.random();
+			}
+		}
+
+		(function(){
+			var _title = document.title;
+			var stop = false;
+			function title() {
+				stop = false;
+				var flasharr = [
+					'◆◇◇◇' + _title + '◇◇◇◆',
+					'◇◆◇◇' + _title + '◇◇◆◇',
+					'◇◇◆◇' + _title + '◇◆◇◇',
+					'◇◇◇◆' + _title + '◆◇◇◇',
+					'◇◇◆◇' + _title + '◇◆◇◇',
+					'◇◆◇◇' + _title + '◇◇◆◇'
+				]
+
+				var len = flasharr.length;
+				var i = 0;
+				setTimeout(function loop () {
+					(function(i){
+						document.title = flasharr[i];
+					})(i);
+					!stop && setTimeout(loop, 200);
+					i++;
+					if(i === len) {i = 0}
+				}, 0);
+			}
+			title.end = function () {
+				document.title = _title;
+				stop = true;
+			}
+
+			window.changeTitle = title;
+		})();
+		// timer
+		function timerInit(startCallback, endCallback){
+			var newYear = +new Date('2014/01/01 GMT+0800');
+			var oTimer = document.getElementById('timer');
+			var leftTime, leftsecond;
+			var day, hour,minute,second;
+			var now;
+			function addZero(num){
+				return num < 10 ? '0' + num : num;
+			}
+			var isStart = false;
+			setTimeout(function timer() {
+				if(!isStart){
+					startCallback();
+					isStart = true;
+				}
+				now = Date.now();
+				leftTime = newYear - now;
+				leftsecond = leftTime/1000 | 0;
+				if (newYear - now > 0) {
+					day = leftsecond / (60*60*24) | 0;
+					hour = (leftsecond-day*24*60*60)/3600 | 0;
+					minute = (leftsecond-day*24*60*60-hour*3600)/60 | 0;
+					second = (leftsecond-day*24*60*60-hour*3600-minute*60 ) | 0;
+					oTimer.innerHTML = day + '天' + addZero(hour) + '时' + addZero(minute) + '分' + addZero(second) + '秒';
+					setTimeout(timer, 1000);
+				} else {
+					endCallback();
+				}
+			}, 0);
+		};
+		// envelope
+		function envelopeInit () {
+			var oEnvelope = document.getElementById('envelopeWrap');
+			oEnvelope.setAttribute('class', '');
+			var oView = document.getElementById('view');
+			var audio = document.getElementsByTagName('audio')[0];
+			oView.onclick = function () {
+				if(confirm('确定戴好耳机了没？')) {
+					audio.play();
+					oEnvelope.setAttribute('class' ,'hide');
+					document.getElementById('wrap').setAttribute('class', '');
+					letterInit();
+				}
+			}
+		}
+		// letter
+		function letterInit (){
+			var printer = {
+				init : function (param) {
+					this.speed = param.speed === 0?0: param.speed || 100;
+					this.wrap = document.getElementById(param.wrap);
+					this.onBegin = param.onBegin || function(){};
+					this.onEnd = param.onEnd || function(){};
+					this.content = param.content || [];
+					this.hasEnd = true;
+					this.print(this.content);
+					return this;
+				},
+				_print: function() {
+					var _this = this;
+					var i = 0, l = _this.content.length;
+					_this.hasEnd = false;
+					setTimeout(function loop () {
+						_this.wrap.innerHTML += _this.content[i];
+						++i;
+						if(i < l) {
+							setTimeout(loop, random(_this.speed/2, _this.speed*2));
+						} else {
+							_this.hasEnd = true;
+							_this.end();
+						}
+					}, 2000);
+					return _this;
+				},
+				print: function (str) {
+					this.onBegin.call(this);
+					this.string += str;
+					this.hasEnd && this._print();
+					return this;
+				},
+				end: function () {
+					this.onEnd.call(this);
+					return this;
+				}
+
+			}
+
+			printer.init({
+				speed: 210,
+				wrap: 'letter',
+				content: letter,
+				onBegin: function() {
+					this.wrap.setAttribute('class', 'blink');
+					gPrintting = true;
+					// autoscroll
+					(function () {
+						setTimeout(function loop () {
+							window.scrollTo(100, document.documentElement.scrollHeight);
+							gPrintting && setTimeout(loop, 50);
+						}, 60000)
+					})();
+
+					changeTitle();
+				},
+				onEnd: function () {
+					gPrintting = false;
+					var _this = this;
+					_this.wrap.innerHTML +=
+						'<div class="btnwrap"><button id="cancel">狠心拒绝</button><button id="ok">我愿意</button></div>';
+					_this.wrap.setAttribute('class', '');
+
+					var oCancel = document.getElementById('cancel'),
+						oOK = document.getElementById('ok');
+					var hoveTime = 0;
+					oCancel.addEventListener('mouseover', function () {
+						++hoveTime;
+						switch(hoveTime) {
+							case 3:
+								this.innerHTML = '挖卡卡';
+								break;
+							case 10:
+								this.innerHTML = '点不到！';
+								break;
+							case 19:
+								this.innerHTML = '烦人！';
+								break;
+							case 26 :
+								this.innerHTML = '坏蛋！';
+								break;
+							case 40 :
+								this.innerHTML = '不会让你点到的！';
+								break;
+							case 49 :
+								this.innerHTML = '不跑啦，累啦，哼！';
+								break;
+						}
+						if(hoveTime < 50) {
+							this.style.left = (+new Date %2 ?'':'-') + random(100, document.documentElement.scrollWidth/2.2) + 'px';
+							this.style.top = random(document.documentElement.scrollHeight/-2, 0) + 'px';
+						}
+					}, false)
+					oCancel.addEventListener('click', function (){
+						this.innerHTML = '我闪！';
+						setTimeout(function () {
+							this.style.display = 'none';
+						}.bind(this), 500)
+					}, false);
+
+					oOK.onclick = function () {
+						document.getElementById('wrap').setAttribute('class', 'hide');
+						alert('我猜到了你一定会点“我愿意”，从今天起，你就是我正式女朋友啦！\n抱走抱走！');
+						location.href = './love.html';
+					}
+				}
+			});
+		}
+
+
+		if (typeof webkitAudioContext === 'undefined') {
+			alert('需要用360等浏览器才能打开');
+		} else {
+			timerInit(
+				function () {
+					document.getElementById('timerWrap').setAttribute('class', '');
+				},
+				function () {
+					with (document.getElementById('timerWrap').style){
+						left = '-9999em';
+						opacity = 0;
+					}
+					envelopeInit();
+				}
+			)
+		}
+
+</script>
+<div style="position:absolute; left:-9999em;">
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_5459156'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/stat.php%3Fid%3D5459156' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41952285-1', 'haozi.de');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
+
